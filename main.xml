@@ -1,0 +1,170 @@
+<?xml version="1.0" standalone="no" ?>
+<MainFile>
+	<Declarations>
+
+		<!-- Variablables -->
+		<sprite variable="current_image" path="sprites/intro/1.png" scale="1" align_x="0" align_y="0"/>
+		<string variable="current_move" value="5"/>
+		<string variable="change_char" value="off"/>
+		<string variable="hit" value="no"/>
+		<string variable="projectile_disolve" value="no"/>
+		<string variable="projectile_disolve_chip" value="no"/>
+		<string variable="projectile_hit" value="no"/>
+		<string variable="orientation" value=""/>
+		<string variable="colision.red_hitboxes" value="no"/>
+		<string variable="colision.blue_hitboxes" value="no"/>
+		<string variable="state" value="stand"/>
+		<string variable="Animation.superbarleft" value="on" to_opponent="no"/>
+		<hitboxes variable="blue"/>
+		<hitboxes variable="red"/>
+		<integer variable="distance" value="0"/>
+		<integer variable="distance_absolute" value="0"/>
+
+		<!-- My Variables -->
+		<string variable="trigger.move_up" value="off"/>
+		<string variable="trigger.poison" value="off"/>
+		<string variable="jumping_state" value="no"/>
+
+		<!-- Projectiles -->
+		<projectile name="obsidiana" position_x="125" position_y="250" frames="40" frame_duration="1" speed_x="30" speed_y="0" damage="30">
+			<Sprites>
+				<Sprite path="sprites/proyectiles/obsidiana/1.png" scale="1" align_x="0" align_y="0" to_opponent="no"/>
+				<Sprite path="sprites/proyectiles/obsidiana/2.png" scale="1" align_x="0" align_y="0" to_opponent="no"/>
+				<Sprite path="sprites/proyectiles/obsidiana/3.png" scale="1" align_x="0" align_y="0" to_opponent="no"/>
+				<Sprite path="sprites/proyectiles/obsidiana/4.png" scale="1" align_x="0" align_y="0" to_opponent="no"/>
+				<Sprite path="sprites/proyectiles/obsidiana/5.png" scale="1" align_x="0" align_y="0" to_opponent="no"/>
+			</Sprites>
+			<Hitboxes frame="0">
+				<Hitbox x1="-50" y1="50" x2="50" y2="-50"/>
+			</Hitboxes>
+		</projectile>
+
+		<projectile name="laser" position_x="670" position_y="140" frames="14" frame_duration="2" speed_x="0" speed_y="0" damage="4" multihit="yes">
+			<Hitboxes frame="0">
+			</Hitboxes>
+			<Hitboxes frame="9">
+				<Hitbox x1="-500" y1="50" x2="500" y2="-50"/>
+			</Hitboxes>
+		</projectile>
+
+		<projectile name="burbuja_a" position_x="200" position_y="200" frames="30" frame_duration="2" speed_x="0" speed_y="0" damage="1" multihit="yes">>
+			<Hitboxes frame="0">
+				<Hitbox x1="-125" y1="125" x2="125" y2="-125"/>
+			</Hitboxes>
+		</projectile>
+
+		<projectile name="burbuja_b" position_x="500" position_y="200" frames="30" frame_duration="2" speed_x="0" speed_y="0" damage="1" multihit="yes">
+			<Hitboxes frame="0">
+				<Hitbox x1="-125" y1="125" x2="125" y2="-125"/>
+			</Hitboxes>
+		</projectile>
+
+		<projectile name="burbuja_c" position_x="800" position_y="200" frames="30" frame_duration="2" speed_x="0" speed_y="0" damage="1" multihit="yes">
+			<Hitboxes frame="0">
+				<Hitbox x1="-125" y1="125" x2="125" y2="-125"/>
+			</Hitboxes>
+		</projectile>
+
+
+
+		<projectile name="columna_a" position_x="47" position_y="280" frames="93" frame_duration="2" speed_x="0" speed_y="0" damage="1" multihit="yes">
+			<Hitboxes frame="0">
+			</Hitboxes>
+			<Hitboxes frame="59">
+				<Hitbox x1="-114" y1="313" x2="144" y2="-313"/>
+			</Hitboxes>
+			<Hitboxes frame="80">
+			</Hitboxes>
+		</projectile>
+
+		<projectile name="columna_b" position_x="500" position_y="280" frames="93" frame_duration="2" speed_x="0" speed_y="0" damage="1" multihit="yes">
+			<Hitboxes frame="0">
+			</Hitboxes>
+			<Hitboxes frame="59">
+				<Hitbox x1="-114" y1="313" x2="144" y2="-313"/>
+			</Hitboxes>
+			<Hitboxes frame="80">
+			</Hitboxes>
+		</projectile>
+
+		<projectile name="columna_c" position_x="800" position_y="280" frames="93" frame_duration="2" speed_x="0" speed_y="0" damage="1" multihit="yes">
+			<Hitboxes frame="0">
+			</Hitboxes>
+			<Hitboxes frame="59">
+				<Hitbox x1="-114" y1="313" x2="144" y2="-313"/>
+			</Hitboxes>
+			<Hitboxes frame="80">
+			</Hitboxes>
+		</projectile>
+
+
+
+		<!-- Bars -->
+		<bar variable="hp" max_value="500" current_value="500" periodic_modifier="0" period="0" alpha="255" r="255" g="0" b="0" x1="450" y1="105" x2="115" y2="135" image="misc/bars/hp.png"/>
+		<bar variable="super" max_value="500" current_value="0" periodic_modifier="0" period="0" alpha="255" r="0" g="0" b="255" x1="330" y1="690" x2="130" y2="775" image="misc/bars/super.png"/>
+
+		<!-- Animation only Moves -->
+		<Move name="victory" frames="10" frame_duration="10"/>
+		<Move name="intro" frames="62" frame_duration="5"/>
+		<Move name="ko" frames="51" frame_duration="2"/>
+		<Move name="entrance" frames="8" frame_duration="3"/>
+		<Move name="change_char" frames="18" frame_duration="1"/>
+
+		<!-- Displacement Moves Triggers -->
+		<Move name="walk back" frames="18" frame_duration="0"/>
+		<Move name="walk forward" frames="18" frame_duration="0"/>
+
+		<!-- Displacement Moves -->
+		<Move name="move_up" frames="18" frame_duration="0" move_y="20"/>
+		<Move name="move_forward" frames="1" frame_duration="0" move_x="7"/>
+		<Move name="move_back" frames="1" frame_duration="0" move_x="-7"/>
+		<Move name="move_up_change_char" frames="1" frame_duration="0"/>
+		<Move name="move_back_change_char" frames="1" frame_duration="0"/>
+		<Move name="move_forward_change_char" frames="1" frame_duration="0"/>
+		<Move name="push_left" frames="1" frame_duration="0"/>
+		<Move name="push_right" frames="1" frame_duration="0"/>
+
+		<!-- Normal Moves -->
+		<Move name="a" frames="3" frame_duration="3" damage="10"/>
+		<Move name="b" frames="11" frame_duration="3" damage="20"/>
+		<Move name="5" frames="8" frame_duration="3"/>
+
+		<!-- Super Moves -->
+		<Move name="move_up_opponent" frames="10" frame_duration="1"/>
+		<Move name="move_back_opponent" frames="5" frame_duration="1"/>
+		<string variable="trigger.move_up_opponent" value="off"/>
+		<string variable="trigger.move_back_opponent" value="off"/>
+
+		<!-- Special Moves -->
+		<Move name="tatsumaki" frames="10" frame_duration="3"/>
+		<Move name="shoryuken" frames="7" frame_duration="3"/>
+		<Move name="hadouken" frames="5" frame_duration="3"/>
+		<Move name="obsidiana" frames="5" frame_duration="3"/>
+		<Move name="laser" frames="11" frame_duration="0"/>
+		<Move name="burbuja_a" frames="16" frame_duration="0"/>
+		<Move name="burbuja_b" frames="16" frame_duration="0"/>
+		<Move name="burbuja_c" frames="16" frame_duration="0"/>
+		<Move name="columna_a" frames="16" frame_duration="0"/>
+		<Move name="columna_b" frames="16" frame_duration="0"/>
+		<Move name="columna_c" frames="16" frame_duration="0"/>
+
+		<!-- Defenses -->
+		<Move name="defense.standing" frames="1" frame_duration="6"/>
+
+		<!-- On Hits -->
+		<Move name="on_hit.stand" frames="12" frame_duration="1"/>
+		<Move name="on_projectile_hit" frames="12" frame_duration="1"/>
+		<Move name="on_hit.knockdown" frames="12" frame_duration="6"/>
+		<Move name="on_projectile_disolve" frames="1" frame_duration="0"/>
+		<Move name="on_projectile_disolve_chip" frames="1" frame_duration="0"/>
+
+		<!-- Other Moves -->
+		<Move name="separate" frames="1" frame_duration="0"/>
+		<Move name="poison" frames="100" frame_duration="3"/>
+		<Move name="gravity" frames="1" frame_duration="0"/>
+
+		<!-- Gameplay Moves -->
+		<Move name="setState.standing" frames="1" frame_duration="0"/>
+		<Move name="on_land_cancel" frames="1" frame_duration="0"/>
+	</Declarations>
+</MainFile>
