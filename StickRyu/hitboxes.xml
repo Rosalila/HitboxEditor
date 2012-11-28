@@ -373,23 +373,23 @@
 	<Move name="stand light punch">
 		<Frame number="1">
 			<Hitboxes variable="blue" to_opponent="no">
-				<Hitbox x1="-50" y1="200" x2="50" y2="0"/>
+				<Hitbox x1="-100" y1="350" x2="20" y2="0"/>
 			</Hitboxes>
 			<Hitboxes variable="red" to_opponent="no">
 			</Hitboxes>
 		</Frame>
 		<Frame number="2">
 			<Hitboxes variable="blue" to_opponent="no">
-				<Hitbox x1="-50" y1="200" x2="50" y2="0"/>
-				<Hitbox x1="10" y1="175" x2="125" y2="125"/>
+				<Hitbox x1="-100" y1="350" x2="20" y2="0"/>
+				<Hitbox x1="-10" y1="320" x2="110" y2="280"/>
 			</Hitboxes>
 			<Hitboxes variable="red" to_opponent="no">
-				<Hitbox x1="10" y1="175" x2="125" y2="125"/>
+				<Hitbox x1="-10" y1="320" x2="110" y2="280"/>
 			</Hitboxes>
 		</Frame>
 		<Frame number="3">
 			<Hitboxes variable="blue" to_opponent="no">
-				<Hitbox x1="-50" y1="200" x2="50" y2="0"/>
+				<Hitbox x1="-100" y1="350" x2="20" y2="0"/>
 			</Hitboxes>
 			<Hitboxes variable="red" to_opponent="no">
 			</Hitboxes>

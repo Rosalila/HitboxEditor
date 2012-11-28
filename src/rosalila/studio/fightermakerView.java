@@ -54,6 +54,8 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
+
+import java.util.ArrayList;
 /**
  * The application's main frame.
  */
@@ -65,8 +67,14 @@ public class fightermakerView extends FrameView implements TreeSelectionListener
     Document sprites_doc;
     String directory_path;
     
+    ArrayList<Hitbox> red_hitboxes,blue_hitboxes;
+    
     public fightermakerView(SingleFrameApplication app) {
         super(app);
+        
+        red_hitboxes=new ArrayList<Hitbox>();
+        blue_hitboxes=new ArrayList<Hitbox>();
+        
         this.setFrame(new JFrame("Rosalila engine hitboxes editor"));
         //bad code to remove warning
         java.util.logging.Logger logger = java.util.logging.Logger.getLogger(org.jdesktop.application.SessionStorage.class.getName());
@@ -79,7 +87,6 @@ public class fightermakerView extends FrameView implements TreeSelectionListener
         int messageTimeout = resourceMap.getInteger("StatusBar.messageTimeout");
         messageTimer = new Timer(messageTimeout, new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                statusMessageLabel.setText("");
             }
         });
         messageTimer.setRepeats(false);
@@ -90,12 +97,9 @@ public class fightermakerView extends FrameView implements TreeSelectionListener
         busyIconTimer = new Timer(busyAnimationRate, new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 busyIconIndex = (busyIconIndex + 1) % busyIcons.length;
-                statusAnimationLabel.setIcon(busyIcons[busyIconIndex]);
             }
         });
         idleIcon = resourceMap.getIcon("StatusBar.idleIcon");
-        statusAnimationLabel.setIcon(idleIcon);
-        progressBar.setVisible(false);
 
         // connecting action tasks to status bar via TaskMonitor
         TaskMonitor taskMonitor = new TaskMonitor(getApplication().getContext());
@@ -104,26 +108,16 @@ public class fightermakerView extends FrameView implements TreeSelectionListener
                 String propertyName = evt.getPropertyName();
                 if ("started".equals(propertyName)) {
                     if (!busyIconTimer.isRunning()) {
-                        statusAnimationLabel.setIcon(busyIcons[0]);
                         busyIconIndex = 0;
                         busyIconTimer.start();
                     }
-                    progressBar.setVisible(true);
-                    progressBar.setIndeterminate(true);
                 } else if ("done".equals(propertyName)) {
                     busyIconTimer.stop();
-                    statusAnimationLabel.setIcon(idleIcon);
-                    progressBar.setVisible(false);
-                    progressBar.setValue(0);
                 } else if ("message".equals(propertyName)) {
                     String text = (String)(evt.getNewValue());
-                    statusMessageLabel.setText((text == null) ? "" : text);
                     messageTimer.restart();
                 } else if ("progress".equals(propertyName)) {
-                    int value = (Integer)(evt.getNewValue());
-                    progressBar.setVisible(true);
-                    progressBar.setIndeterminate(false);
-                    progressBar.setValue(value);
+
                 }
             }
         });
@@ -167,17 +161,6 @@ public class fightermakerView extends FrameView implements TreeSelectionListener
     private void initComponents() {
 
         mainPanel = new javax.swing.JPanel();
-        menuBar = new javax.swing.JMenuBar();
-        javax.swing.JMenu fileMenu = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        javax.swing.JMenuItem exitMenuItem = new javax.swing.JMenuItem();
-        javax.swing.JMenu helpMenu = new javax.swing.JMenu();
-        javax.swing.JMenuItem aboutMenuItem = new javax.swing.JMenuItem();
-        statusPanel = new javax.swing.JPanel();
-        javax.swing.JSeparator statusPanelSeparator = new javax.swing.JSeparator();
-        statusMessageLabel = new javax.swing.JLabel();
-        statusAnimationLabel = new javax.swing.JLabel();
-        progressBar = new javax.swing.JProgressBar();
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
         jPanel11 = new javax.swing.JPanel();
@@ -185,79 +168,37 @@ public class fightermakerView extends FrameView implements TreeSelectionListener
         btn_save = new javax.swing.JButton();
         image_panel = new rosalila.studio.ImagePanel();
         jScrollPane9 = new javax.swing.JScrollPane();
-        list_hitboxes = new javax.swing.JList();
+        list_red_hitboxes = new javax.swing.JList();
         jScrollPane10 = new javax.swing.JScrollPane();
         list_frames = new javax.swing.JList();
+        jScrollPane11 = new javax.swing.JScrollPane();
+        list_blue_hitboxes = new javax.swing.JList();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        label_current_sprite = new javax.swing.JLabel();
         jScrollPane8 = new javax.swing.JScrollPane();
         list_moves = new javax.swing.JList();
+        menuBar = new javax.swing.JMenuBar();
+        javax.swing.JMenu fileMenu = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        javax.swing.JMenuItem exitMenuItem = new javax.swing.JMenuItem();
+        javax.swing.JMenu helpMenu = new javax.swing.JMenu();
+        javax.swing.JMenuItem aboutMenuItem = new javax.swing.JMenuItem();
 
         mainPanel.setName("panel_main"); // NOI18N
 
-        javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
-        mainPanel.setLayout(mainPanelLayout);
-        mainPanelLayout.setHorizontalGroup(
-            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1084, Short.MAX_VALUE)
-        );
-        mainPanelLayout.setVerticalGroup(
-            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(rosalila.studio.fightermaker.class).getContext().getResourceMap(fightermakerView.class);
-        mainPanel.getAccessibleContext().setAccessibleName(resourceMap.getString("panel_main.AccessibleContext.accessibleName")); // NOI18N
-        mainPanel.getAccessibleContext().setAccessibleDescription(resourceMap.getString("panel_main.AccessibleContext.accessibleDescription")); // NOI18N
-
-        menuBar.setName("menuBar"); // NOI18N
-
-        fileMenu.setText(resourceMap.getString("fileMenu.text")); // NOI18N
-        fileMenu.setName("fileMenu"); // NOI18N
-
-        jMenuItem1.setText(resourceMap.getString("jMenuItem1.text")); // NOI18N
-        jMenuItem1.setName("jMenuItem1"); // NOI18N
-        jMenuItem1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                jMenuItem1MousePressed(evt);
-            }
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jMenuItem1MouseClicked(evt);
-            }
-        });
-        fileMenu.add(jMenuItem1);
-
-        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(rosalila.studio.fightermaker.class).getContext().getActionMap(fightermakerView.class, this);
-        exitMenuItem.setAction(actionMap.get("quit")); // NOI18N
-        exitMenuItem.setName("exitMenuItem"); // NOI18N
-        fileMenu.add(exitMenuItem);
-
-        menuBar.add(fileMenu);
-
-        helpMenu.setText(resourceMap.getString("helpMenu.text")); // NOI18N
-        helpMenu.setName("helpMenu"); // NOI18N
-
-        aboutMenuItem.setAction(actionMap.get("showAboutBox")); // NOI18N
-        aboutMenuItem.setName("aboutMenuItem"); // NOI18N
-        helpMenu.add(aboutMenuItem);
-
-        menuBar.add(helpMenu);
-
-        statusPanel.setName("statusPanel"); // NOI18N
-
-        statusPanelSeparator.setName("statusPanelSeparator"); // NOI18N
-
-        statusMessageLabel.setName("statusMessageLabel"); // NOI18N
-
-        statusAnimationLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        statusAnimationLabel.setName("statusAnimationLabel"); // NOI18N
-
-        progressBar.setName("progressBar"); // NOI18N
-
         jScrollPane1.setName("jScrollPane1"); // NOI18N
 
+        jPanel1.setAlignmentX(0.0F);
+        jPanel1.setAlignmentY(0.0F);
+        jPanel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jPanel1.setName("jPanel1"); // NOI18N
+        jPanel1.setPreferredSize(new java.awt.Dimension(1408, 800));
 
         jPanel11.setName("jPanel11"); // NOI18N
+        jPanel11.setPreferredSize(new java.awt.Dimension(900, 507));
 
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(rosalila.studio.fightermaker.class).getContext().getResourceMap(fightermakerView.class);
         jLabel1.setFont(resourceMap.getFont("jLabel1.font")); // NOI18N
         jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
         jLabel1.setName("jLabel1"); // NOI18N
@@ -296,18 +237,18 @@ public class fightermakerView extends FrameView implements TreeSelectionListener
         );
         image_panelLayout.setVerticalGroup(
             image_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 432, Short.MAX_VALUE)
+            .addGap(0, 431, Short.MAX_VALUE)
         );
 
         jScrollPane9.setName("jScrollPane9"); // NOI18N
 
-        list_hitboxes.setName("list_hitboxes"); // NOI18N
-        list_hitboxes.addMouseListener(new java.awt.event.MouseAdapter() {
+        list_red_hitboxes.setName("list_red_hitboxes"); // NOI18N
+        list_red_hitboxes.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                list_hitboxesMousePressed(evt);
+                list_red_hitboxesMousePressed(evt);
             }
         });
-        jScrollPane9.setViewportView(list_hitboxes);
+        jScrollPane9.setViewportView(list_red_hitboxes);
 
         jScrollPane10.setName("jScrollPane10"); // NOI18N
 
@@ -319,6 +260,27 @@ public class fightermakerView extends FrameView implements TreeSelectionListener
         });
         jScrollPane10.setViewportView(list_frames);
 
+        jScrollPane11.setName("jScrollPane11"); // NOI18N
+
+        list_blue_hitboxes.setName("list_blue_hitboxes"); // NOI18N
+        list_blue_hitboxes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                list_blue_hitboxesMousePressed(evt);
+            }
+        });
+        jScrollPane11.setViewportView(list_blue_hitboxes);
+
+        jLabel2.setFont(resourceMap.getFont("jLabel2.font")); // NOI18N
+        jLabel2.setText(resourceMap.getString("jLabel2.text")); // NOI18N
+        jLabel2.setName("jLabel2"); // NOI18N
+
+        jLabel3.setFont(resourceMap.getFont("jLabel3.font")); // NOI18N
+        jLabel3.setText(resourceMap.getString("jLabel3.text")); // NOI18N
+        jLabel3.setName("jLabel3"); // NOI18N
+
+        label_current_sprite.setText(resourceMap.getString("label_current_sprite.text")); // NOI18N
+        label_current_sprite.setName("label_current_sprite"); // NOI18N
+
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
         jPanel11.setLayout(jPanel11Layout);
         jPanel11Layout.setHorizontalGroup(
@@ -326,30 +288,52 @@ public class fightermakerView extends FrameView implements TreeSelectionListener
             .addGroup(jPanel11Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jLabel1)
-                        .addComponent(jScrollPane10, javax.swing.GroupLayout.DEFAULT_SIZE, 291, Short.MAX_VALUE)
-                        .addComponent(jScrollPane9))
-                    .addComponent(btn_save, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28)
-                .addComponent(image_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(204, Short.MAX_VALUE))
+                    .addGroup(jPanel11Layout.createSequentialGroup()
+                        .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabel1)
+                                .addComponent(jScrollPane10, javax.swing.GroupLayout.DEFAULT_SIZE, 291, Short.MAX_VALUE))
+                            .addComponent(btn_save, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel11Layout.createSequentialGroup()
+                                .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jLabel2))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                        .addComponent(image_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(27, 27, 27))
+                    .addGroup(jPanel11Layout.createSequentialGroup()
+                        .addComponent(label_current_sprite)
+                        .addContainerGap(731, Short.MAX_VALUE))))
         );
         jPanel11Layout.setVerticalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel11Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(image_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel11Layout.createSequentialGroup()
+                        .addGap(33, 33, 33)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(12, 12, 12)
-                        .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
-                        .addComponent(btn_save)))
-                .addContainerGap())
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel11Layout.createSequentialGroup()
+                                .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btn_save))
+                            .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(label_current_sprite))
+                    .addGroup(jPanel11Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(image_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(43, Short.MAX_VALUE))
         );
 
         jScrollPane8.setName("jScrollPane8"); // NOI18N
@@ -366,67 +350,76 @@ public class fightermakerView extends FrameView implements TreeSelectionListener
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
-                .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(18, 18, 18)
+                .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, 858, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(274, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 561, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(77, 77, 77)))
+                    .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 776, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
         jScrollPane1.setViewportView(jPanel1);
 
-        javax.swing.GroupLayout statusPanelLayout = new javax.swing.GroupLayout(statusPanel);
-        statusPanel.setLayout(statusPanelLayout);
-        statusPanelLayout.setHorizontalGroup(
-            statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, statusPanelLayout.createSequentialGroup()
-                .addGroup(statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(statusPanelLayout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1045, Short.MAX_VALUE))
-                    .addGroup(statusPanelLayout.createSequentialGroup()
-                        .addGroup(statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(statusPanelSeparator, javax.swing.GroupLayout.DEFAULT_SIZE, 785, Short.MAX_VALUE)
-                            .addGroup(statusPanelLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(statusMessageLabel)
-                                .addGap(517, 517, 517)))
-                        .addGap(125, 125, 125)
-                        .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(statusAnimationLabel)))
-                .addContainerGap())
+        javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
+        mainPanel.setLayout(mainPanelLayout);
+        mainPanelLayout.setHorizontalGroup(
+            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1142, Short.MAX_VALUE)
         );
-        statusPanelLayout.setVerticalGroup(
-            statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(statusPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 582, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(statusPanelSeparator, javax.swing.GroupLayout.PREFERRED_SIZE, 2, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(statusMessageLabel)
-                    .addComponent(statusAnimationLabel)
-                    .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(12, 12, 12))
+        mainPanelLayout.setVerticalGroup(
+            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 517, Short.MAX_VALUE)
         );
+
+        jScrollPane1.getAccessibleContext().setAccessibleParent(mainPanel);
+
+        mainPanel.getAccessibleContext().setAccessibleName(resourceMap.getString("panel_main.AccessibleContext.accessibleName")); // NOI18N
+        mainPanel.getAccessibleContext().setAccessibleDescription(resourceMap.getString("panel_main.AccessibleContext.accessibleDescription")); // NOI18N
+
+        menuBar.setName("menuBar"); // NOI18N
+
+        fileMenu.setText(resourceMap.getString("fileMenu.text")); // NOI18N
+        fileMenu.setName("fileMenu"); // NOI18N
+
+        jMenuItem1.setText(resourceMap.getString("jMenuItem1.text")); // NOI18N
+        jMenuItem1.setName("jMenuItem1"); // NOI18N
+        jMenuItem1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jMenuItem1MousePressed(evt);
+            }
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenuItem1MouseClicked(evt);
+            }
+        });
+        fileMenu.add(jMenuItem1);
+
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(rosalila.studio.fightermaker.class).getContext().getActionMap(fightermakerView.class, this);
+        exitMenuItem.setAction(actionMap.get("quit")); // NOI18N
+        exitMenuItem.setName("exitMenuItem"); // NOI18N
+        fileMenu.add(exitMenuItem);
+
+        menuBar.add(fileMenu);
+
+        helpMenu.setText(resourceMap.getString("helpMenu.text")); // NOI18N
+        helpMenu.setName("helpMenu"); // NOI18N
+
+        aboutMenuItem.setAction(actionMap.get("showAboutBox")); // NOI18N
+        aboutMenuItem.setName("aboutMenuItem"); // NOI18N
+        helpMenu.add(aboutMenuItem);
+
+        menuBar.add(helpMenu);
 
         setComponent(mainPanel);
         setMenuBar(menuBar);
-        setStatusBar(statusPanel);
     }// </editor-fold>//GEN-END:initComponents
 
 private void jMenuItem1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem1MouseClicked
@@ -513,8 +506,175 @@ private void list_movesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:
 
     //Clear hitboxes list
     DefaultListModel clean_model = new DefaultListModel();
-    list_hitboxes.setModel(clean_model);
+    list_red_hitboxes.setModel(clean_model);
+    list_blue_hitboxes.setModel(clean_model);
 }//GEN-LAST:event_list_movesMousePressed
+
+private void list_blue_hitboxesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_list_blue_hitboxesMousePressed
+// TODO add your handling code here:
+}//GEN-LAST:event_list_blue_hitboxesMousePressed
+
+private void list_framesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_list_framesMousePressed
+
+    blue_hitboxes.clear();
+    red_hitboxes.clear();
+    boolean empty_red = false;
+    boolean empty_blue = false;
+    
+    NodeList listOfMoves = hitboxes_doc.getElementsByTagName("Move");
+
+    for(int s=0; s<listOfMoves.getLength() ; s++)//Move loop
+    {
+        Node move_node = listOfMoves.item(s);
+        Element move_element = (Element)move_node;
+        if(move_element.getAttribute("name").equals(list_moves.getSelectedValue()))
+        {
+            int i=0;
+            for(Node frame=move_node.getFirstChild();frame!=null;frame=frame.getNextSibling())//Frame loop
+            {
+                if(frame.getNodeName().equals("Frame"))
+                {
+                    String frame_number = "frame " + ((Element)frame).getAttribute("number");
+                    if( frame_number.equals((String)list_frames.getSelectedValue()) )
+                    {
+                        for(Node hitbox=frame.getFirstChild();hitbox!=null;hitbox=hitbox.getNextSibling())//Hitbox loop
+                        {
+                            if(hitbox.getNodeName().equals("Hitboxes"))
+                            {
+                                if(((Element)hitbox).getAttribute("variable").equals("red"))
+                                {
+                                    empty_red=true;
+                                    for(Node hitbox_red=hitbox.getFirstChild();hitbox_red!=null;hitbox_red=hitbox_red.getNextSibling())//Red Hitboxes loop
+                                    {
+                                        if(hitbox_red.getNodeName().equals("Hitbox"))
+                                        {
+                                            int x1 = Integer.parseInt(((Element)hitbox_red).getAttribute("x1"));
+                                            int y1 = Integer.parseInt(((Element)hitbox_red).getAttribute("y1"));
+                                            int x2 = Integer.parseInt(((Element)hitbox_red).getAttribute("x2"));
+                                            int y2 = Integer.parseInt(((Element)hitbox_red).getAttribute("y2"));
+                                            red_hitboxes.add(new Hitbox(x1, y1, x2, y2));
+                                            empty_red=false;
+                                        }
+                                    }
+                                }
+                                if(((Element)hitbox).getAttribute("variable").equals("blue"))
+                                {
+                                    empty_blue=true;
+                                    for(Node hitbox_blue=hitbox.getFirstChild();hitbox_blue!=null;hitbox_blue=hitbox_blue.getNextSibling())//Blue Hitboxes loop
+                                    {
+                                        if(hitbox_blue.getNodeName().equals("Hitbox"))
+                                        {
+                                            int x1 = Integer.parseInt(((Element)hitbox_blue).getAttribute("x1"));
+                                            int y1 = Integer.parseInt(((Element)hitbox_blue).getAttribute("y1"));
+                                            int x2 = Integer.parseInt(((Element)hitbox_blue).getAttribute("x2"));
+                                            int y2 = Integer.parseInt(((Element)hitbox_blue).getAttribute("y2"));
+                                            blue_hitboxes.add(new Hitbox(x1, y1, x2, y2));
+                                            empty_blue=false;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    //Update hitbox_list
+    DefaultListModel model_red_hitboxes = new DefaultListModel();
+    int model_pos=0;
+    for(int i=0;i<red_hitboxes.size();i++)
+    {
+        model_red_hitboxes.add(model_pos,"["+red_hitboxes.get(i).x1+","+red_hitboxes.get(i).y1+"]"+"["+red_hitboxes.get(i).x2+","+red_hitboxes.get(i).y2+"]");
+        model_pos++;
+    }
+    
+    if(empty_red)
+    {
+        model_red_hitboxes.add(model_pos,"Clear red hitboxes");
+        model_pos++;
+    }
+    
+    list_red_hitboxes.setModel(model_red_hitboxes);
+    
+    DefaultListModel model_blue_hitboxes = new DefaultListModel();
+    model_pos=0;
+    for(int i=0;i<blue_hitboxes.size();i++)
+    {
+        model_blue_hitboxes.add(model_pos,"["+blue_hitboxes.get(i).x1+","+blue_hitboxes.get(i).y1+"]"+"["+blue_hitboxes.get(i).x2+","+blue_hitboxes.get(i).y2+"]");
+        model_pos++;
+    }
+    
+    if(empty_blue)
+    {
+        model_blue_hitboxes.add(model_pos,"Clear blue hitboxes");
+        model_pos++;
+    }
+    
+    list_blue_hitboxes.setModel(model_blue_hitboxes);
+
+    //Get the current sprite path
+
+    NodeList listOfMovesSprites = sprites_doc.getElementsByTagName("Move");
+    
+    boolean sprite_found=false;
+
+    for(int s=0; s<listOfMovesSprites.getLength() ; s++)
+    {
+        Node move_node = listOfMovesSprites.item(s);
+        Element move_element = (Element)move_node;
+        if(move_element.getAttribute("name").equals(list_moves.getSelectedValue()))
+        {
+            for(Node sprite=move_node.getFirstChild();sprite!=null;sprite=sprite.getNextSibling())//Sprite loop
+            {
+                if(sprite.getNodeName().equals("Sprite"))
+                {
+                    String frame_number = "frame " + ((Element)sprite).getAttribute("frame_number");
+                    if(frame_number.equals((String)list_frames.getSelectedValue()) )
+                    {
+                        sprite_found=true;
+                        String sprite_path="/"+((Element)sprite).getAttribute("path");
+                        //Print sprite
+                        ((ImagePanel)image_panel).setImage(directory_path+sprite_path, blue_hitboxes, red_hitboxes);
+                        label_current_sprite.setText(sprite_path);
+                    }
+                }
+            }
+        }
+    }
+    if(!sprite_found)
+    {
+        ((ImagePanel)image_panel).setImage("LogoEngine.png");
+        label_current_sprite.setText("LogoEngine.png");
+    }
+}//GEN-LAST:event_list_framesMousePressed
+
+private void list_red_hitboxesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_list_red_hitboxesMousePressed
+    // TODO add your handling code here:
+}//GEN-LAST:event_list_red_hitboxesMousePressed
+
+private void image_panelMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_image_panelMouseDragged
+    // TODO add your handling code here:
+    //((ImagePanel)this.jPanel1).setLocation(evt.getX(), evt.getY());
+//    ((ImagePanel)this.image_panel).x=evt.getX();
+//    ((ImagePanel)this.image_panel).y=evt.getY();
+//    ((ImagePanel)this.image_panel).repaint();
+}//GEN-LAST:event_image_panelMouseDragged
+
+private void image_panelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_image_panelMouseClicked
+    // TODO add your handling code here:
+}//GEN-LAST:event_image_panelMouseClicked
+
+private void image_panelMouseWheelMoved(java.awt.event.MouseWheelEvent evt) {//GEN-FIRST:event_image_panelMouseWheelMoved
+
+//    if(evt.getWheelRotation()<0) {
+//        ((ImagePanel)this.image_panel).scale-=0.01;
+//    }else {
+//        ((ImagePanel)this.image_panel).scale+=0.01;
+//    }
+//    ((ImagePanel)this.image_panel).repaint();
+}//GEN-LAST:event_image_panelMouseWheelMoved
 
 private void btn_saveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_saveMouseClicked
 //    try
@@ -569,157 +729,27 @@ private void btn_saveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
 //    }
 }//GEN-LAST:event_btn_saveMouseClicked
 
-private void image_panelMouseWheelMoved(java.awt.event.MouseWheelEvent evt) {//GEN-FIRST:event_image_panelMouseWheelMoved
-
-//    if(evt.getWheelRotation()<0) {
-//        ((ImagePanel)this.image_panel).scale-=0.01;
-//    }else {
-//        ((ImagePanel)this.image_panel).scale+=0.01;
-//    }
-//    ((ImagePanel)this.image_panel).repaint();
-}//GEN-LAST:event_image_panelMouseWheelMoved
-
-private void image_panelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_image_panelMouseClicked
-    // TODO add your handling code here:
-}//GEN-LAST:event_image_panelMouseClicked
-
-private void image_panelMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_image_panelMouseDragged
-    // TODO add your handling code here:
-    //((ImagePanel)this.jPanel1).setLocation(evt.getX(), evt.getY());
-//    ((ImagePanel)this.image_panel).x=evt.getX();
-//    ((ImagePanel)this.image_panel).y=evt.getY();
-//    ((ImagePanel)this.image_panel).repaint();
-}//GEN-LAST:event_image_panelMouseDragged
-
-private void list_hitboxesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_list_hitboxesMousePressed
-    // TODO add your handling code here:
-}//GEN-LAST:event_list_hitboxesMousePressed
-
-private void list_framesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_list_framesMousePressed
-    NodeList listOfMoves = hitboxes_doc.getElementsByTagName("Move");
-
-    DefaultListModel model = new DefaultListModel();
-
-    for(int s=0; s<listOfMoves.getLength() ; s++)//Move loop
-    {
-        Node move_node = listOfMoves.item(s);
-        Element move_element = (Element)move_node;
-        if(move_element.getAttribute("name").equals(list_moves.getSelectedValue()))
-        {
-            int i=0;
-            for(Node frame=move_node.getFirstChild();frame!=null;frame=frame.getNextSibling())//Frame loop
-            {
-                if(frame.getNodeName().equals("Frame"))
-                {
-                    String frame_number = "frame " + ((Element)frame).getAttribute("number");
-                    if( frame_number.equals((String)list_frames.getSelectedValue()) )
-                    {
-                        for(Node hitbox=frame.getFirstChild();hitbox!=null;hitbox=hitbox.getNextSibling())//Hitbox loop
-                        {
-                            if(hitbox.getNodeName().equals("Hitboxes"))
-                            {
-                                if(((Element)hitbox).getAttribute("variable").equals("red"))
-                                {
-                                    boolean empty_red = true;
-                                    for(Node hitbox_red=hitbox.getFirstChild();hitbox_red!=null;hitbox_red=hitbox_red.getNextSibling())//Red Hitboxes loop
-                                    {
-                                        if(hitbox_red.getNodeName().equals("Hitbox"))
-                                        {
-                                            int x1 = Integer.parseInt(((Element)hitbox_red).getAttribute("x1"));
-                                            int y1 = Integer.parseInt(((Element)hitbox_red).getAttribute("y1"));
-                                            int x2 = Integer.parseInt(((Element)hitbox_red).getAttribute("x2"));
-                                            int y2 = Integer.parseInt(((Element)hitbox_red).getAttribute("y2"));
-                                            model.add(i,"Red:  ["+x1+","+y1+"]"+"["+x2+","+y2+"]");
-                                            i++;
-                                            empty_red=false;
-                                        }
-                                    }
-                                    if(empty_red)
-                                    {
-                                        model.add(i,"Clear red hitboxes");
-                                        i++;
-                                    }
-                                }
-                                if(((Element)hitbox).getAttribute("variable").equals("blue"))
-                                {
-                                    boolean empty_blue = true;
-                                    for(Node hitbox_blue=hitbox.getFirstChild();hitbox_blue!=null;hitbox_blue=hitbox_blue.getNextSibling())//Blue Hitboxes loop
-                                    {
-                                        if(hitbox_blue.getNodeName().equals("Hitbox"))
-                                        {
-                                            int x1 = Integer.parseInt(((Element)hitbox_blue).getAttribute("x1"));
-                                            int y1 = Integer.parseInt(((Element)hitbox_blue).getAttribute("y1"));
-                                            int x2 = Integer.parseInt(((Element)hitbox_blue).getAttribute("x2"));
-                                            int y2 = Integer.parseInt(((Element)hitbox_blue).getAttribute("y2"));
-                                            model.add(i,"Blue: ["+x1+","+y1+"]"+"["+x2+","+y2+"]");
-                                            i++;
-                                            empty_blue=false;
-                                        }
-                                    }
-                                    if(empty_blue)
-                                    {
-                                        model.add(i,"Clear blue hitboxes");
-                                        i++;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-    list_hitboxes.setModel(model);
-
-    //Get the current sprite path
-    String sprite_path="LogoEngine.png";
-
-    NodeList listOfMovesSprites = sprites_doc.getElementsByTagName("Move");
-
-    for(int s=0; s<listOfMovesSprites.getLength() ; s++)
-    {
-        Node move_node = listOfMovesSprites.item(s);
-        Element move_element = (Element)move_node;
-        if(move_element.getAttribute("name").equals(list_moves.getSelectedValue()))
-        {
-            for(Node sprite=move_node.getFirstChild();sprite!=null;sprite=sprite.getNextSibling())//Sprite loop
-            {
-                if(sprite.getNodeName().equals("Sprite"))
-                {
-                    String frame_number = "frame " + ((Element)sprite).getAttribute("frame_number");
-                    if(frame_number.equals((String)list_frames.getSelectedValue()) )
-                    {
-                        sprite_path="/"+((Element)sprite).getAttribute("path");
-                    }
-                }
-            }
-        }
-    }
-
-    //Print sprite
-    ((ImagePanel)image_panel).setImage(directory_path+sprite_path);
-}//GEN-LAST:event_list_framesMousePressed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_save;
     private javax.swing.JPanel image_panel;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane10;
+    private javax.swing.JScrollPane jScrollPane11;
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JScrollPane jScrollPane9;
+    private javax.swing.JLabel label_current_sprite;
+    private javax.swing.JList list_blue_hitboxes;
     private javax.swing.JList list_frames;
-    private javax.swing.JList list_hitboxes;
     private javax.swing.JList list_moves;
+    private javax.swing.JList list_red_hitboxes;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JMenuBar menuBar;
-    private javax.swing.JProgressBar progressBar;
-    private javax.swing.JLabel statusAnimationLabel;
-    private javax.swing.JLabel statusMessageLabel;
-    private javax.swing.JPanel statusPanel;
     // End of variables declaration//GEN-END:variables
 
     private final Timer messageTimer;
