@@ -67,13 +67,31 @@ public class fightermakerView extends FrameView implements TreeSelectionListener
     Document sprites_doc;
     String directory_path;
     
+    Element current_frame;
+    Element current_hitbox;
+    
     ArrayList<Hitbox> red_hitboxes,blue_hitboxes;
+    
+    NodeList listOfMoves_main_file;
+    NodeList listOfMoves_hitboxes_file;
+    
+    String hitbox_color_selected;
+    int hitbox_index_selected;
     
     public fightermakerView(SingleFrameApplication app) {
         super(app);
         
+        current_frame=null;
+        current_hitbox=null;
+        
         red_hitboxes=new ArrayList<Hitbox>();
         blue_hitboxes=new ArrayList<Hitbox>();
+        
+        listOfMoves_main_file=null;
+        listOfMoves_hitboxes_file=null;
+        
+        hitbox_color_selected="";
+        hitbox_index_selected=-1;
         
         this.setFrame(new JFrame("Rosalila engine hitboxes editor"));
         //bad code to remove warning
@@ -165,7 +183,6 @@ public class fightermakerView extends FrameView implements TreeSelectionListener
         jPanel1 = new javax.swing.JPanel();
         jPanel11 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        btn_save = new javax.swing.JButton();
         image_panel = new rosalila.studio.ImagePanel();
         jScrollPane9 = new javax.swing.JScrollPane();
         list_red_hitboxes = new javax.swing.JList();
@@ -176,6 +193,14 @@ public class fightermakerView extends FrameView implements TreeSelectionListener
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         label_current_sprite = new javax.swing.JLabel();
+        spinner_x1 = new javax.swing.JSpinner();
+        spinner_y1 = new javax.swing.JSpinner();
+        spinner_x2 = new javax.swing.JSpinner();
+        spinner_y2 = new javax.swing.JSpinner();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
         jScrollPane8 = new javax.swing.JScrollPane();
         list_moves = new javax.swing.JList();
         menuBar = new javax.swing.JMenuBar();
@@ -202,14 +227,6 @@ public class fightermakerView extends FrameView implements TreeSelectionListener
         jLabel1.setFont(resourceMap.getFont("jLabel1.font")); // NOI18N
         jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
         jLabel1.setName("jLabel1"); // NOI18N
-
-        btn_save.setText(resourceMap.getString("btn_save.text")); // NOI18N
-        btn_save.setName("btn_save"); // NOI18N
-        btn_save.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btn_saveMouseClicked(evt);
-            }
-        });
 
         image_panel.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         image_panel.setName("image_panel"); // NOI18N
@@ -281,6 +298,51 @@ public class fightermakerView extends FrameView implements TreeSelectionListener
         label_current_sprite.setText(resourceMap.getString("label_current_sprite.text")); // NOI18N
         label_current_sprite.setName("label_current_sprite"); // NOI18N
 
+        spinner_x1.setName("spinner_x1"); // NOI18N
+        spinner_x1.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                spinner_x1StateChanged(evt);
+            }
+        });
+        spinner_x1.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                spinner_x1PropertyChange(evt);
+            }
+        });
+
+        spinner_y1.setName("spinner_y1"); // NOI18N
+        spinner_y1.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                spinner_y1StateChanged(evt);
+            }
+        });
+
+        spinner_x2.setName("spinner_x2"); // NOI18N
+        spinner_x2.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                spinner_x2StateChanged(evt);
+            }
+        });
+
+        spinner_y2.setName("spinner_y2"); // NOI18N
+        spinner_y2.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                spinner_y2StateChanged(evt);
+            }
+        });
+
+        jLabel4.setText(resourceMap.getString("jLabel4.text")); // NOI18N
+        jLabel4.setName("jLabel4"); // NOI18N
+
+        jLabel5.setText(resourceMap.getString("jLabel5.text")); // NOI18N
+        jLabel5.setName("jLabel5"); // NOI18N
+
+        jLabel6.setText(resourceMap.getString("jLabel6.text")); // NOI18N
+        jLabel6.setName("jLabel6"); // NOI18N
+
+        jLabel7.setText(resourceMap.getString("jLabel7.text")); // NOI18N
+        jLabel7.setName("jLabel7"); // NOI18N
+
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
         jPanel11.setLayout(jPanel11Layout);
         jPanel11Layout.setHorizontalGroup(
@@ -293,14 +355,34 @@ public class fightermakerView extends FrameView implements TreeSelectionListener
                             .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(jLabel1)
                                 .addComponent(jScrollPane10, javax.swing.GroupLayout.DEFAULT_SIZE, 291, Short.MAX_VALUE))
-                            .addComponent(btn_save, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2)
                             .addGroup(jPanel11Layout.createSequentialGroup()
-                                .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jScrollPane11, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel11Layout.createSequentialGroup()
+                                        .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addGroup(jPanel11Layout.createSequentialGroup()
+                                                .addComponent(jLabel4)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(spinner_x1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(jPanel11Layout.createSequentialGroup()
+                                                .addComponent(jLabel6)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(spinner_x2, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addGroup(jPanel11Layout.createSequentialGroup()
+                                                .addComponent(jLabel5)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(spinner_y1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
+                                                .addComponent(jLabel7)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(spinner_y2, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel3)
-                                    .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jLabel2))
+                                    .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                         .addComponent(image_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(27, 27, 27))
@@ -323,17 +405,26 @@ public class fightermakerView extends FrameView implements TreeSelectionListener
                             .addComponent(jLabel3))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel11Layout.createSequentialGroup()
-                                .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btn_save))
+                            .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(label_current_sprite))
+                        .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(spinner_x1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5)
+                            .addComponent(spinner_y1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel11Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(image_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addGap(1, 1, 1)
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(spinner_x2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6)
+                    .addComponent(spinner_y2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 94, Short.MAX_VALUE)
+                .addComponent(label_current_sprite)
+                .addGap(36, 36, 36))
         );
 
         jScrollPane8.setName("jScrollPane8"); // NOI18N
@@ -362,7 +453,7 @@ public class fightermakerView extends FrameView implements TreeSelectionListener
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, 609, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 776, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -377,7 +468,9 @@ public class fightermakerView extends FrameView implements TreeSelectionListener
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 517, Short.MAX_VALUE)
+            .addGroup(mainPanelLayout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 654, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jScrollPane1.getAccessibleContext().setAccessibleParent(mainPanel);
@@ -453,17 +546,14 @@ private void jMenuItem1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:
             // normalize text representation
             main_doc.getDocumentElement ().normalize ();
 
-            NodeList listOfMoves = main_doc.getElementsByTagName("Move");
+            listOfMoves_main_file = main_doc.getElementsByTagName("Move");
 
             DefaultListModel model = new DefaultListModel();
             
-            for(int s=0; s<listOfMoves.getLength() ; s++){
-
-
-                Node first_move_node = listOfMoves.item(s);
-                Element first_move_element = (Element)first_move_node;
-                model.add(s, first_move_element.getAttribute("name"));
-            }//end of for loop with s var
+            for(int s=0; s<listOfMoves_main_file.getLength() ; s++)
+            {
+                model.add(s, ((Element)listOfMoves_main_file.item(s)).getAttribute("name"));
+            }
             
             list_moves.setModel(model);
 
@@ -484,13 +574,13 @@ private void jMenuItem1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:
 private void list_movesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_list_movesMousePressed
 
     //Add frames
-    NodeList listOfMoves = main_doc.getElementsByTagName("Move");
+    listOfMoves_main_file = main_doc.getElementsByTagName("Move");
 
     DefaultListModel model = new DefaultListModel();
 
-    for(int s=0; s<listOfMoves.getLength() ; s++)
+    for(int s=0; s<listOfMoves_main_file.getLength() ; s++)
     {
-        Node move_node = listOfMoves.item(s);
+        Node move_node = listOfMoves_main_file.item(s);
         Element move_element = (Element)move_node;
         if(move_element.getAttribute("name").equals(list_moves.getSelectedValue()))
         {
@@ -499,6 +589,7 @@ private void list_movesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:
             {
                 model.add(i, "frame "+(i+1));
             }
+            break;
         }
     }
 
@@ -511,76 +602,122 @@ private void list_movesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:
 }//GEN-LAST:event_list_movesMousePressed
 
 private void list_blue_hitboxesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_list_blue_hitboxesMousePressed
-// TODO add your handling code here:
+    if(blue_hitboxes.size()<=list_blue_hitboxes.getSelectedIndex())
+    {
+        return;
+    }
+    
+    hitbox_color_selected="blue";
+    hitbox_index_selected=list_blue_hitboxes.getSelectedIndex();
+    
+    int x1=blue_hitboxes.get(list_blue_hitboxes.getSelectedIndex()).x1;
+    int y1=blue_hitboxes.get(list_blue_hitboxes.getSelectedIndex()).y1;
+    int x2=blue_hitboxes.get(list_blue_hitboxes.getSelectedIndex()).x2;
+    int y2=blue_hitboxes.get(list_blue_hitboxes.getSelectedIndex()).y2;
+    spinner_x1.setValue(x1);
+    spinner_y1.setValue(y1);
+    spinner_x2.setValue(x2);
+    spinner_y2.setValue(y2);
 }//GEN-LAST:event_list_blue_hitboxesMousePressed
 
 private void list_framesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_list_framesMousePressed
-
-    blue_hitboxes.clear();
-    red_hitboxes.clear();
-    boolean empty_red = false;
-    boolean empty_blue = false;
     
-    NodeList listOfMoves = hitboxes_doc.getElementsByTagName("Move");
+    //NodeList listOfMoves = hitboxes_doc.getElementsByTagName("Move");
+    
+    listOfMoves_hitboxes_file = hitboxes_doc.getElementsByTagName("Move");
 
-    for(int s=0; s<listOfMoves.getLength() ; s++)//Move loop
+    for(int s=0; s<listOfMoves_hitboxes_file.getLength() ; s++)//Move loop
     {
-        Node move_node = listOfMoves.item(s);
+        Node move_node = listOfMoves_hitboxes_file.item(s);
         Element move_element = (Element)move_node;
         if(move_element.getAttribute("name").equals(list_moves.getSelectedValue()))
         {
-            int i=0;
-            for(Node frame=move_node.getFirstChild();frame!=null;frame=frame.getNextSibling())//Frame loop
+            for(Node frame=move_element.getFirstChild();frame!=null;frame=frame.getNextSibling())//Frame loop
             {
                 if(frame.getNodeName().equals("Frame"))
                 {
                     String frame_number = "frame " + ((Element)frame).getAttribute("number");
                     if( frame_number.equals((String)list_frames.getSelectedValue()) )
                     {
-                        for(Node hitbox=frame.getFirstChild();hitbox!=null;hitbox=hitbox.getNextSibling())//Hitbox loop
-                        {
-                            if(hitbox.getNodeName().equals("Hitboxes"))
-                            {
-                                if(((Element)hitbox).getAttribute("variable").equals("red"))
-                                {
-                                    empty_red=true;
-                                    for(Node hitbox_red=hitbox.getFirstChild();hitbox_red!=null;hitbox_red=hitbox_red.getNextSibling())//Red Hitboxes loop
-                                    {
-                                        if(hitbox_red.getNodeName().equals("Hitbox"))
-                                        {
-                                            int x1 = Integer.parseInt(((Element)hitbox_red).getAttribute("x1"));
-                                            int y1 = Integer.parseInt(((Element)hitbox_red).getAttribute("y1"));
-                                            int x2 = Integer.parseInt(((Element)hitbox_red).getAttribute("x2"));
-                                            int y2 = Integer.parseInt(((Element)hitbox_red).getAttribute("y2"));
-                                            red_hitboxes.add(new Hitbox(x1, y1, x2, y2));
-                                            empty_red=false;
-                                        }
-                                    }
-                                }
-                                if(((Element)hitbox).getAttribute("variable").equals("blue"))
-                                {
-                                    empty_blue=true;
-                                    for(Node hitbox_blue=hitbox.getFirstChild();hitbox_blue!=null;hitbox_blue=hitbox_blue.getNextSibling())//Blue Hitboxes loop
-                                    {
-                                        if(hitbox_blue.getNodeName().equals("Hitbox"))
-                                        {
-                                            int x1 = Integer.parseInt(((Element)hitbox_blue).getAttribute("x1"));
-                                            int y1 = Integer.parseInt(((Element)hitbox_blue).getAttribute("y1"));
-                                            int x2 = Integer.parseInt(((Element)hitbox_blue).getAttribute("x2"));
-                                            int y2 = Integer.parseInt(((Element)hitbox_blue).getAttribute("y2"));
-                                            blue_hitboxes.add(new Hitbox(x1, y1, x2, y2));
-                                            empty_blue=false;
-                                        }
-                                    }
-                                }
-                            }
-                        }
+                        current_frame = (Element) frame;
+                        updateHitboxes(current_frame);
+                    }
+                }
+            }
+        }
+    }
+}//GEN-LAST:event_list_framesMousePressed
+
+void updateHitboxes(Element frame)
+{
+    blue_hitboxes.clear();
+    red_hitboxes.clear();
+    
+    boolean empty_red = false;
+    boolean empty_blue = false;
+    
+    for(Node hitbox=frame.getFirstChild();hitbox!=null;hitbox=hitbox.getNextSibling())//Hitbox loop
+    {
+        if(hitbox.getNodeName().equals("Hitboxes"))
+        {
+            if(((Element)hitbox).getAttribute("variable").equals("red"))
+            {
+                empty_red=true;
+                for(Node hitbox_red=hitbox.getFirstChild();hitbox_red!=null;hitbox_red=hitbox_red.getNextSibling())//Red Hitboxes loop
+                {
+                    //!!!
+                    if(hitbox_red.getNodeName().equals("Hitbox"))
+                    {
+                        int x1 = Integer.parseInt(((Element)hitbox_red).getAttribute("x1"));
+                        int y1 = Integer.parseInt(((Element)hitbox_red).getAttribute("y1"));
+                        int x2 = Integer.parseInt(((Element)hitbox_red).getAttribute("x2"));
+                        int y2 = Integer.parseInt(((Element)hitbox_red).getAttribute("y2"));
+                        red_hitboxes.add(new Hitbox(x1, y1, x2, y2));
+                        empty_red=false;
+                    }
+                }
+            }
+            if(((Element)hitbox).getAttribute("variable").equals("blue"))
+            {
+                empty_blue=true;
+                for(Node hitbox_blue=hitbox.getFirstChild();hitbox_blue!=null;hitbox_blue=hitbox_blue.getNextSibling())//Blue Hitboxes loop
+                {
+                    if(hitbox_blue.getNodeName().equals("Hitbox"))
+                    {
+                        int x1 = Integer.parseInt(((Element)hitbox_blue).getAttribute("x1"));
+                        int y1 = Integer.parseInt(((Element)hitbox_blue).getAttribute("y1"));
+                        int x2 = Integer.parseInt(((Element)hitbox_blue).getAttribute("x2"));
+                        int y2 = Integer.parseInt(((Element)hitbox_blue).getAttribute("y2"));
+                        blue_hitboxes.add(new Hitbox(x1, y1, x2, y2));
+                        empty_blue=false;
                     }
                 }
             }
         }
     }
     
+    drawHitboxes(empty_red, empty_blue);
+    saveHitboxes();
+}
+
+void saveHitboxes()
+{
+    try {
+        //Save XML file
+        OutputFormat format = new OutputFormat(hitboxes_doc);
+        format.setIndenting(true);
+        XMLSerializer serializer;
+        serializer = new XMLSerializer(new FileOutputStream(new File(directory_path+"/hitboxes.xml")), format);
+        serializer.serialize(hitboxes_doc);
+    } catch (FileNotFoundException ex) {
+        Logger.getLogger(fightermakerView.class.getName()).log(Level.SEVERE, null, ex);
+    } catch (IOException ex) {
+        Logger.getLogger(fightermakerView.class.getName()).log(Level.SEVERE, null, ex);
+    }
+}
+
+void drawHitboxes(boolean empty_blue,boolean empty_red)
+{
     //Update hitbox_list
     DefaultListModel model_red_hitboxes = new DefaultListModel();
     int model_pos=0;
@@ -648,10 +785,23 @@ private void list_framesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST
         ((ImagePanel)image_panel).setImage("LogoEngine.png");
         label_current_sprite.setText("LogoEngine.png");
     }
-}//GEN-LAST:event_list_framesMousePressed
+}
 
 private void list_red_hitboxesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_list_red_hitboxesMousePressed
-    // TODO add your handling code here:
+    if(blue_hitboxes.size()<=list_red_hitboxes.getSelectedIndex())
+    {
+        return;
+    }
+    hitbox_color_selected="red";
+    hitbox_index_selected=list_red_hitboxes.getSelectedIndex();
+    int x1=red_hitboxes.get(list_red_hitboxes.getSelectedIndex()).x1;
+    int y1=red_hitboxes.get(list_red_hitboxes.getSelectedIndex()).y1;
+    int x2=red_hitboxes.get(list_red_hitboxes.getSelectedIndex()).x2;
+    int y2=red_hitboxes.get(list_red_hitboxes.getSelectedIndex()).y2;
+    spinner_x1.setValue(x1);
+    spinner_y1.setValue(y1);
+    spinner_x2.setValue(x2);
+    spinner_y2.setValue(y2);
 }//GEN-LAST:event_list_red_hitboxesMousePressed
 
 private void image_panelMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_image_panelMouseDragged
@@ -676,65 +826,115 @@ private void image_panelMouseWheelMoved(java.awt.event.MouseWheelEvent evt) {//G
 //    ((ImagePanel)this.image_panel).repaint();
 }//GEN-LAST:event_image_panelMouseWheelMoved
 
-private void btn_saveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_saveMouseClicked
-//    try
-//    {
-//        //Set values
-//        String move = (String)list_moves.getSelectedValue();
-//
-//        NodeList listOfMoves = main_doc.getElementsByTagName("Move");
-//        for(int s=0; s<listOfMoves.getLength();s++)
-//        {
-//            Node first_move_node = listOfMoves.item(s);
-//            Element first_move_element = (Element)first_move_node;
-//            if(first_move_element.getAttribute("name").equals(move))
-//            {
-//                first_move_element.setAttribute("frame_duration", ""+spinner_frame_duration.getValue());
-//                first_move_element.setAttribute("move_x", ""+spinner_move_x.getValue());
-//                first_move_element.setAttribute("move_y", ""+spinner_move_y.getValue());
-//                first_move_element.setAttribute("damage", ""+spinner_damage.getValue());
-//                first_move_element.setAttribute("frames", ""+spinner_frames.getValue());
-//            }
-//        }
-//
-//        NodeList listOfMovesSfx = sfx_doc.getElementsByTagName("Sound");
-//        for(int s=0; s<listOfMovesSfx.getLength();s++)
-//        {
-//            Node first_move_node = listOfMovesSfx.item(s);
-//            Element first_move_element = (Element)first_move_node;
-//            if(first_move_element.getAttribute("move").equals(move))
-//            {
-//                first_move_element.setAttribute("file", txt_sound_file.getText());
-//            }
-//        }
-//
-//
-//        //Save XML file
-//        OutputFormat format = new OutputFormat(main_doc);
-//        format.setIndenting(true);
-//        XMLSerializer serializer;
-//        serializer = new XMLSerializer(new FileOutputStream(new File(directory_path+"/main.xml")), format);
-//        serializer.serialize(main_doc);
-//
-//
-//        OutputFormat format2 = new OutputFormat(sfx_doc);
-//        format2.setIndenting(true);
-//        XMLSerializer serializer2;
-//        serializer2 = new XMLSerializer(new FileOutputStream(new File(directory_path+"/sfx.xml")), format2);
-//        serializer2.serialize(sfx_doc);
-//    } catch (FileNotFoundException ex) {
-//        Logger.getLogger(fightermakerView.class.getName()).log(Level.SEVERE, null, ex);
-//    }catch (IOException ex) {
-//        Logger.getLogger(fightermakerView.class.getName()).log(Level.SEVERE, null, ex);
-//    }
-}//GEN-LAST:event_btn_saveMouseClicked
+private void spinner_x1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_spinner_x1PropertyChange
+
+}//GEN-LAST:event_spinner_x1PropertyChange
+
+private void spinner_x1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spinner_x1StateChanged
+    int i=0;
+    for(Node red_hitboxes_node=current_frame.getFirstChild();red_hitboxes_node!=null;red_hitboxes_node=red_hitboxes_node.getNextSibling())//Hitbox loop
+    {
+        if(red_hitboxes_node.getNodeName().equals("Hitboxes"))
+        {
+            if(((Element)red_hitboxes_node).getAttribute("variable").equals(hitbox_color_selected))
+            {
+                for(Node hitbox=red_hitboxes_node.getFirstChild();hitbox!=null;hitbox=hitbox.getNextSibling())//Red Hitboxes loop
+                {
+                    if(hitbox.getNodeName().equals("Hitbox"))
+                    {
+                        if(i==hitbox_index_selected)
+                            ((Element)hitbox).setAttribute("x1", ""+spinner_x1.getValue());
+                        i++;
+                    }
+                }
+            }
+        }
+    }
+    
+    updateHitboxes(current_frame);
+}//GEN-LAST:event_spinner_x1StateChanged
+
+private void spinner_y1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spinner_y1StateChanged
+    int i=0;
+    for(Node red_hitboxes_node=current_frame.getFirstChild();red_hitboxes_node!=null;red_hitboxes_node=red_hitboxes_node.getNextSibling())//Hitbox loop
+    {
+        if(red_hitboxes_node.getNodeName().equals("Hitboxes"))
+        {
+            if(((Element)red_hitboxes_node).getAttribute("variable").equals(hitbox_color_selected))
+            {
+                for(Node hitbox=red_hitboxes_node.getFirstChild();hitbox!=null;hitbox=hitbox.getNextSibling())//Red Hitboxes loop
+                {
+                    if(hitbox.getNodeName().equals("Hitbox"))
+                    {
+                        if(i==hitbox_index_selected)
+                            ((Element)hitbox).setAttribute("y1", ""+spinner_y1.getValue());
+                        i++;
+                    }
+                }
+            }
+        }
+    }
+    
+    updateHitboxes(current_frame);
+}//GEN-LAST:event_spinner_y1StateChanged
+
+private void spinner_x2StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spinner_x2StateChanged
+    int i=0;
+    for(Node red_hitboxes_node=current_frame.getFirstChild();red_hitboxes_node!=null;red_hitboxes_node=red_hitboxes_node.getNextSibling())//Hitbox loop
+    {
+        if(red_hitboxes_node.getNodeName().equals("Hitboxes"))
+        {
+            if(((Element)red_hitboxes_node).getAttribute("variable").equals(hitbox_color_selected))
+            {
+                for(Node hitbox=red_hitboxes_node.getFirstChild();hitbox!=null;hitbox=hitbox.getNextSibling())//Red Hitboxes loop
+                {
+                    if(hitbox.getNodeName().equals("Hitbox"))
+                    {
+                        if(i==hitbox_index_selected)
+                            ((Element)hitbox).setAttribute("x2", ""+spinner_x2.getValue());
+                        i++;
+                    }
+                }
+            }
+        }
+    }
+    
+    updateHitboxes(current_frame);
+}//GEN-LAST:event_spinner_x2StateChanged
+
+private void spinner_y2StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spinner_y2StateChanged
+    int i=0;
+    for(Node red_hitboxes_node=current_frame.getFirstChild();red_hitboxes_node!=null;red_hitboxes_node=red_hitboxes_node.getNextSibling())//Hitbox loop
+    {
+        if(red_hitboxes_node.getNodeName().equals("Hitboxes"))
+        {
+            if(((Element)red_hitboxes_node).getAttribute("variable").equals(hitbox_color_selected))
+            {
+                for(Node hitbox=red_hitboxes_node.getFirstChild();hitbox!=null;hitbox=hitbox.getNextSibling())//Red Hitboxes loop
+                {
+                    if(hitbox.getNodeName().equals("Hitbox"))
+                    {
+                        if(i==hitbox_index_selected)
+                            ((Element)hitbox).setAttribute("y2", ""+spinner_y2.getValue());
+                        i++;
+                    }
+                }
+            }
+        }
+    }
+    
+    updateHitboxes(current_frame);
+}//GEN-LAST:event_spinner_y2StateChanged
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn_save;
     private javax.swing.JPanel image_panel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel11;
@@ -750,6 +950,10 @@ private void btn_saveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
     private javax.swing.JList list_red_hitboxes;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JMenuBar menuBar;
+    private javax.swing.JSpinner spinner_x1;
+    private javax.swing.JSpinner spinner_x2;
+    private javax.swing.JSpinner spinner_y1;
+    private javax.swing.JSpinner spinner_y2;
     // End of variables declaration//GEN-END:variables
 
     private final Timer messageTimer;
