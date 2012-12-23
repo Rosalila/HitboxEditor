@@ -145,6 +145,14 @@
                                       <Component id="label_current_sprite" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace pref="731" max="32767" attributes="0"/>
                                   </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="button_add_blue_hitbox" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="button_add_red_hitbox" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="555" max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
                           </Group>
                       </Group>
@@ -188,7 +196,13 @@
                                   <Component id="spinner_y2" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace pref="94" max="32767" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="button_add_blue_hitbox" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="button_add_red_hitbox" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace pref="63" max="32767" attributes="0"/>
                               <Component id="label_current_sprite" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
                           </Group>
@@ -377,6 +391,33 @@
                         <Property name="text" type="java.lang.String" resourceKey="jLabel7.text"/>
                         <Property name="name" type="java.lang.String" value="jLabel7" noResource="true"/>
                       </Properties>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="button_add_red_hitbox">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" resourceKey="button_add_red_hitbox.text"/>
+                        <Property name="name" type="java.lang.String" value="button_add_red_hitbox" noResource="true"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="button_add_red_hitboxMousePressed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="button_add_blue_hitbox">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" resourceKey="button_add_blue_hitbox.text"/>
+                        <Property name="name" type="java.lang.String" value="button_add_blue_hitbox" noResource="true"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="button_add_blue_hitboxMousePressed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="jButton1">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" resourceKey="jButton1.text"/>
+                        <Property name="name" type="java.lang.String" value="jButton1" noResource="true"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jButton1MousePressed"/>
+                      </Events>
                     </Component>
                   </SubComponents>
                 </Container>

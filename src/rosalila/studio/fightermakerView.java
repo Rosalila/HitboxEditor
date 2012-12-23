@@ -56,6 +56,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 /**
  * The application's main frame.
  */
@@ -67,6 +68,7 @@ public class fightermakerView extends FrameView implements TreeSelectionListener
     Document sprites_doc;
     String directory_path;
     
+    Element current_move;
     Element current_frame;
     Element current_hitbox;
     
@@ -77,10 +79,12 @@ public class fightermakerView extends FrameView implements TreeSelectionListener
     
     String hitbox_color_selected;
     int hitbox_index_selected;
+    int frame_index_selected;    
     
     public fightermakerView(SingleFrameApplication app) {
         super(app);
         
+        current_move=null;
         current_frame=null;
         current_hitbox=null;
         
@@ -92,6 +96,7 @@ public class fightermakerView extends FrameView implements TreeSelectionListener
         
         hitbox_color_selected="";
         hitbox_index_selected=-1;
+        frame_index_selected=-1;
         
         this.setFrame(new JFrame("Rosalila engine hitboxes editor"));
         //bad code to remove warning
@@ -201,6 +206,9 @@ public class fightermakerView extends FrameView implements TreeSelectionListener
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
+        button_add_red_hitbox = new javax.swing.JButton();
+        button_add_blue_hitbox = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         jScrollPane8 = new javax.swing.JScrollPane();
         list_moves = new javax.swing.JList();
         menuBar = new javax.swing.JMenuBar();
@@ -343,6 +351,30 @@ public class fightermakerView extends FrameView implements TreeSelectionListener
         jLabel7.setText(resourceMap.getString("jLabel7.text")); // NOI18N
         jLabel7.setName("jLabel7"); // NOI18N
 
+        button_add_red_hitbox.setText(resourceMap.getString("button_add_red_hitbox.text")); // NOI18N
+        button_add_red_hitbox.setName("button_add_red_hitbox"); // NOI18N
+        button_add_red_hitbox.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                button_add_red_hitboxMousePressed(evt);
+            }
+        });
+
+        button_add_blue_hitbox.setText(resourceMap.getString("button_add_blue_hitbox.text")); // NOI18N
+        button_add_blue_hitbox.setName("button_add_blue_hitbox"); // NOI18N
+        button_add_blue_hitbox.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                button_add_blue_hitboxMousePressed(evt);
+            }
+        });
+
+        jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
+        jButton1.setName("jButton1"); // NOI18N
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jButton1MousePressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
         jPanel11.setLayout(jPanel11Layout);
         jPanel11Layout.setHorizontalGroup(
@@ -388,7 +420,14 @@ public class fightermakerView extends FrameView implements TreeSelectionListener
                         .addGap(27, 27, 27))
                     .addGroup(jPanel11Layout.createSequentialGroup()
                         .addComponent(label_current_sprite)
-                        .addContainerGap(731, Short.MAX_VALUE))))
+                        .addContainerGap(731, Short.MAX_VALUE))
+                    .addGroup(jPanel11Layout.createSequentialGroup()
+                        .addComponent(button_add_blue_hitbox)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(button_add_red_hitbox)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1)
+                        .addGap(555, 555, 555))))
         );
         jPanel11Layout.setVerticalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -422,7 +461,12 @@ public class fightermakerView extends FrameView implements TreeSelectionListener
                     .addComponent(jLabel6)
                     .addComponent(spinner_y2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 94, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(button_add_blue_hitbox)
+                    .addComponent(button_add_red_hitbox)
+                    .addComponent(jButton1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
                 .addComponent(label_current_sprite)
                 .addGap(36, 36, 36))
         );
@@ -572,7 +616,10 @@ private void jMenuItem1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:
 }//GEN-LAST:event_jMenuItem1MousePressed
 
 private void list_movesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_list_movesMousePressed
-
+    current_frame=null;
+    current_hitbox=null;
+    hitbox_index_selected=-1;
+    frame_index_selected=-1;
     //Add frames
     listOfMoves_main_file = main_doc.getElementsByTagName("Move");
 
@@ -599,6 +646,18 @@ private void list_movesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:
     DefaultListModel clean_model = new DefaultListModel();
     list_red_hitboxes.setModel(clean_model);
     list_blue_hitboxes.setModel(clean_model);
+    
+    //Upadate current_move
+    listOfMoves_hitboxes_file = hitboxes_doc.getElementsByTagName("Move");
+    for(int s=0; s<listOfMoves_hitboxes_file.getLength() ; s++)//Move loop
+    {
+        Node move_node = listOfMoves_hitboxes_file.item(s);
+        Element move_element = (Element)move_node;
+        if(move_element.getAttribute("name").equals(list_moves.getSelectedValue()))
+        {
+            current_move=move_element;
+        }
+    }
 }//GEN-LAST:event_list_movesMousePressed
 
 private void list_blue_hitboxesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_list_blue_hitboxesMousePressed
@@ -621,11 +680,15 @@ private void list_blue_hitboxesMousePressed(java.awt.event.MouseEvent evt) {//GE
 }//GEN-LAST:event_list_blue_hitboxesMousePressed
 
 private void list_framesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_list_framesMousePressed
-    
+    current_hitbox=null;
+    hitbox_index_selected=-1;
+    frame_index_selected=Integer.parseInt(""+list_frames.getSelectedIndex());
     //NodeList listOfMoves = hitboxes_doc.getElementsByTagName("Move");
     
     listOfMoves_hitboxes_file = hitboxes_doc.getElementsByTagName("Move");
 
+    boolean frame_found=false;
+    
     for(int s=0; s<listOfMoves_hitboxes_file.getLength() ; s++)//Move loop
     {
         Node move_node = listOfMoves_hitboxes_file.item(s);
@@ -641,10 +704,21 @@ private void list_framesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST
                     {
                         current_frame = (Element) frame;
                         updateHitboxes(current_frame);
+                        frame_found=true;
                     }
                 }
             }
         }
+    }
+    if(!frame_found)
+    {
+        //Clear hitboxes list
+        DefaultListModel clean_model = new DefaultListModel();
+        list_red_hitboxes.setModel(clean_model);
+        list_blue_hitboxes.setModel(clean_model);
+        blue_hitboxes.clear();
+        red_hitboxes.clear();
+        printSprite();
     }
 }//GEN-LAST:event_list_framesMousePressed
 
@@ -696,7 +770,7 @@ void updateHitboxes(Element frame)
         }
     }
     
-    drawHitboxes(empty_red, empty_blue);
+    drawHitboxes(empty_blue, empty_red);
     saveHitboxes();
 }
 
@@ -729,7 +803,7 @@ void drawHitboxes(boolean empty_blue,boolean empty_red)
     
     if(empty_red)
     {
-        model_red_hitboxes.add(model_pos,"Clear red hitboxes");
+        model_red_hitboxes.add(model_pos,"Clean red hitboxes");
         model_pos++;
     }
     
@@ -745,12 +819,17 @@ void drawHitboxes(boolean empty_blue,boolean empty_red)
     
     if(empty_blue)
     {
-        model_blue_hitboxes.add(model_pos,"Clear blue hitboxes");
+        model_blue_hitboxes.add(model_pos,"Clean blue hitboxes");
         model_pos++;
     }
     
     list_blue_hitboxes.setModel(model_blue_hitboxes);
+    
+    printSprite();
+}
 
+void printSprite()
+{
     //Get the current sprite path
 
     NodeList listOfMovesSprites = sprites_doc.getElementsByTagName("Move");
@@ -831,103 +910,258 @@ private void spinner_x1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN
 }//GEN-LAST:event_spinner_x1PropertyChange
 
 private void spinner_x1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spinner_x1StateChanged
-    int i=0;
-    for(Node red_hitboxes_node=current_frame.getFirstChild();red_hitboxes_node!=null;red_hitboxes_node=red_hitboxes_node.getNextSibling())//Hitbox loop
-    {
-        if(red_hitboxes_node.getNodeName().equals("Hitboxes"))
+    if(hitbox_index_selected!=-1)
+    {    
+        int i=0;
+        for(Node hitboxes_node=current_frame.getFirstChild();hitboxes_node!=null;hitboxes_node=hitboxes_node.getNextSibling())//Hitbox loop
         {
-            if(((Element)red_hitboxes_node).getAttribute("variable").equals(hitbox_color_selected))
+            if(hitboxes_node.getNodeName().equals("Hitboxes"))
             {
-                for(Node hitbox=red_hitboxes_node.getFirstChild();hitbox!=null;hitbox=hitbox.getNextSibling())//Red Hitboxes loop
+                if(((Element)hitboxes_node).getAttribute("variable").equals(hitbox_color_selected))
                 {
-                    if(hitbox.getNodeName().equals("Hitbox"))
+                    for(Node hitbox=hitboxes_node.getFirstChild();hitbox!=null;hitbox=hitbox.getNextSibling())//Red Hitboxes loop
                     {
-                        if(i==hitbox_index_selected)
-                            ((Element)hitbox).setAttribute("x1", ""+spinner_x1.getValue());
-                        i++;
+                        if(hitbox.getNodeName().equals("Hitbox"))
+                        {
+                            if(i==hitbox_index_selected)
+                                ((Element)hitbox).setAttribute("x1", ""+spinner_x1.getValue());
+                            i++;
+                        }
                     }
                 }
             }
         }
+
+        updateHitboxes(current_frame);
+    }else
+    {
+        JOptionPane.showMessageDialog(null, "Select a hitbox first.", "Be careful", JOptionPane.INFORMATION_MESSAGE);
     }
-    
-    updateHitboxes(current_frame);
 }//GEN-LAST:event_spinner_x1StateChanged
 
 private void spinner_y1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spinner_y1StateChanged
-    int i=0;
-    for(Node red_hitboxes_node=current_frame.getFirstChild();red_hitboxes_node!=null;red_hitboxes_node=red_hitboxes_node.getNextSibling())//Hitbox loop
-    {
-        if(red_hitboxes_node.getNodeName().equals("Hitboxes"))
+    if(hitbox_index_selected!=-1)
+    {    
+        int i=0;
+        for(Node hitboxes_node=current_frame.getFirstChild();hitboxes_node!=null;hitboxes_node=hitboxes_node.getNextSibling())//Hitbox loop
         {
-            if(((Element)red_hitboxes_node).getAttribute("variable").equals(hitbox_color_selected))
+            if(hitboxes_node.getNodeName().equals("Hitboxes"))
             {
-                for(Node hitbox=red_hitboxes_node.getFirstChild();hitbox!=null;hitbox=hitbox.getNextSibling())//Red Hitboxes loop
+                if(((Element)hitboxes_node).getAttribute("variable").equals(hitbox_color_selected))
                 {
-                    if(hitbox.getNodeName().equals("Hitbox"))
+                    for(Node hitbox=hitboxes_node.getFirstChild();hitbox!=null;hitbox=hitbox.getNextSibling())//Red Hitboxes loop
                     {
-                        if(i==hitbox_index_selected)
-                            ((Element)hitbox).setAttribute("y1", ""+spinner_y1.getValue());
-                        i++;
+                        if(hitbox.getNodeName().equals("Hitbox"))
+                        {
+                            if(i==hitbox_index_selected)
+                                ((Element)hitbox).setAttribute("y1", ""+spinner_y1.getValue());
+                            i++;
+                        }
                     }
                 }
             }
         }
+
+        updateHitboxes(current_frame);
+    }else
+    {
+        JOptionPane.showMessageDialog(null, "Select a hitbox first.", "Be careful", JOptionPane.INFORMATION_MESSAGE);
     }
-    
-    updateHitboxes(current_frame);
 }//GEN-LAST:event_spinner_y1StateChanged
 
 private void spinner_x2StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spinner_x2StateChanged
-    int i=0;
-    for(Node red_hitboxes_node=current_frame.getFirstChild();red_hitboxes_node!=null;red_hitboxes_node=red_hitboxes_node.getNextSibling())//Hitbox loop
-    {
-        if(red_hitboxes_node.getNodeName().equals("Hitboxes"))
+    if(hitbox_index_selected!=-1)
+    {    
+        int i=0;
+        for(Node hitboxes_node=current_frame.getFirstChild();hitboxes_node!=null;hitboxes_node=hitboxes_node.getNextSibling())//Hitbox loop
         {
-            if(((Element)red_hitboxes_node).getAttribute("variable").equals(hitbox_color_selected))
+            if(hitboxes_node.getNodeName().equals("Hitboxes"))
             {
-                for(Node hitbox=red_hitboxes_node.getFirstChild();hitbox!=null;hitbox=hitbox.getNextSibling())//Red Hitboxes loop
+                if(((Element)hitboxes_node).getAttribute("variable").equals(hitbox_color_selected))
                 {
-                    if(hitbox.getNodeName().equals("Hitbox"))
+                    for(Node hitbox=hitboxes_node.getFirstChild();hitbox!=null;hitbox=hitbox.getNextSibling())//Red Hitboxes loop
                     {
-                        if(i==hitbox_index_selected)
-                            ((Element)hitbox).setAttribute("x2", ""+spinner_x2.getValue());
-                        i++;
+                        if(hitbox.getNodeName().equals("Hitbox"))
+                        {
+                            if(i==hitbox_index_selected)
+                                ((Element)hitbox).setAttribute("x2", ""+spinner_x2.getValue());
+                            i++;
+                        }
                     }
                 }
             }
         }
+
+        updateHitboxes(current_frame);
+    }else
+    {
+        JOptionPane.showMessageDialog(null, "Select a hitbox first.", "Be careful", JOptionPane.INFORMATION_MESSAGE);
     }
-    
-    updateHitboxes(current_frame);
 }//GEN-LAST:event_spinner_x2StateChanged
 
 private void spinner_y2StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spinner_y2StateChanged
-    int i=0;
-    for(Node red_hitboxes_node=current_frame.getFirstChild();red_hitboxes_node!=null;red_hitboxes_node=red_hitboxes_node.getNextSibling())//Hitbox loop
-    {
-        if(red_hitboxes_node.getNodeName().equals("Hitboxes"))
+    if(hitbox_index_selected!=-1)
+    {    
+        int i=0;
+        for(Node hitboxes_node=current_frame.getFirstChild();hitboxes_node!=null;hitboxes_node=hitboxes_node.getNextSibling())//Hitbox loop
         {
-            if(((Element)red_hitboxes_node).getAttribute("variable").equals(hitbox_color_selected))
+            if(hitboxes_node.getNodeName().equals("Hitboxes"))
             {
-                for(Node hitbox=red_hitboxes_node.getFirstChild();hitbox!=null;hitbox=hitbox.getNextSibling())//Red Hitboxes loop
+                if(((Element)hitboxes_node).getAttribute("variable").equals(hitbox_color_selected))
                 {
-                    if(hitbox.getNodeName().equals("Hitbox"))
+                    for(Node hitbox=hitboxes_node.getFirstChild();hitbox!=null;hitbox=hitbox.getNextSibling())//Red Hitboxes loop
                     {
-                        if(i==hitbox_index_selected)
-                            ((Element)hitbox).setAttribute("y2", ""+spinner_y2.getValue());
-                        i++;
+                        if(hitbox.getNodeName().equals("Hitbox"))
+                        {
+                            if(i==hitbox_index_selected)
+                                ((Element)hitbox).setAttribute("y2", ""+spinner_y2.getValue());
+                            i++;
+                        }
                     }
                 }
             }
         }
+
+        updateHitboxes(current_frame);
+    }else
+    {
+        JOptionPane.showMessageDialog(null, "Select a hitbox first.", "Be careful", JOptionPane.INFORMATION_MESSAGE);
     }
-    
-    updateHitboxes(current_frame);
 }//GEN-LAST:event_spinner_y2StateChanged
 
+private void button_add_red_hitboxMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_button_add_red_hitboxMousePressed
+    if(frame_index_selected!=-1)
+    {
+        if(current_frame==null)
+        {
+            Element new_frame = hitboxes_doc.createElement("Frame");
+            new_frame.setAttribute("Frame", ""+(frame_index_selected+1));
+            if(current_move==null)
+            {
+                Element new_move = hitboxes_doc.createElement("Move");
+                new_move.setAttribute("name", ""+list_moves.getSelectedValue());
+                hitboxes_doc.getFirstChild().appendChild(new_move);
+            }
+            current_move.appendChild(new_frame);
+            current_frame=new_frame;
+        }
+        int i=0;
+        boolean hitboxes_exist=false;
+        for(Node hitboxes_node=current_frame.getFirstChild();hitboxes_node!=null;hitboxes_node=hitboxes_node.getNextSibling())//Hitbox loop
+        {
+            if(hitboxes_node.getNodeName().equals("Hitboxes"))
+            {
+                if(((Element)hitboxes_node).getAttribute("variable").equals("red"))
+                {
+                    hitboxes_exist=true;
+                    Element new_hitbox = hitboxes_doc.createElement("Hitbox");
+                    new_hitbox.setAttribute("x1", ""+spinner_x1.getValue());
+                    new_hitbox.setAttribute("y1", ""+spinner_y1.getValue());
+                    new_hitbox.setAttribute("x2", ""+spinner_x2.getValue());
+                    new_hitbox.setAttribute("y2", ""+spinner_y2.getValue());
+                    hitboxes_node.appendChild(new_hitbox);
+                }
+            }
+        }
+        
+        if(!hitboxes_exist)
+            JOptionPane.showMessageDialog(null, "Create a clean hitboxes list before.", "Be careful", JOptionPane.INFORMATION_MESSAGE);
+        
+        updateHitboxes(current_frame);
+    }
+    else
+    {
+        JOptionPane.showMessageDialog(null, "Select a frame first.", "Be careful", JOptionPane.INFORMATION_MESSAGE);
+    }
+}//GEN-LAST:event_button_add_red_hitboxMousePressed
+
+private void button_add_blue_hitboxMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_button_add_blue_hitboxMousePressed
+
+    if(frame_index_selected!=-1)
+    {
+        if(current_frame==null)
+        {
+            Element new_frame = hitboxes_doc.createElement("Frame");
+            new_frame.setAttribute("Frame", ""+(frame_index_selected+1));
+            if(current_move==null)
+            {
+                Element new_move = hitboxes_doc.createElement("Move");
+                new_move.setAttribute("name", ""+list_moves.getSelectedValue());
+                hitboxes_doc.getFirstChild().appendChild(new_move);
+            }
+            current_move.appendChild(new_frame);
+            current_frame=new_frame;
+        }
+        int i=0;
+        boolean hitboxes_exist=false;
+        for(Node hitboxes_node=current_frame.getFirstChild();hitboxes_node!=null;hitboxes_node=hitboxes_node.getNextSibling())//Hitbox loop
+        {
+            if(hitboxes_node.getNodeName().equals("Hitboxes"))
+            {
+                if(((Element)hitboxes_node).getAttribute("variable").equals("blue"))
+                {
+                    hitboxes_exist=true;
+                    Element new_hitbox = hitboxes_doc.createElement("Hitbox");
+                    new_hitbox.setAttribute("x1", ""+spinner_x1.getValue());
+                    new_hitbox.setAttribute("y1", ""+spinner_y1.getValue());
+                    new_hitbox.setAttribute("x2", ""+spinner_x2.getValue());
+                    new_hitbox.setAttribute("y2", ""+spinner_y2.getValue());
+                    hitboxes_node.appendChild(new_hitbox);
+                }
+            }
+        }
+        
+        if(!hitboxes_exist)
+            JOptionPane.showMessageDialog(null, "Create a clean hitboxes list before.", "Be careful", JOptionPane.INFORMATION_MESSAGE);
+        
+        updateHitboxes(current_frame);
+    }
+    else
+    {
+        JOptionPane.showMessageDialog(null, "Select a frame first.", "Be careful", JOptionPane.INFORMATION_MESSAGE);
+    }
+    
+}//GEN-LAST:event_button_add_blue_hitboxMousePressed
+
+private void jButton1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MousePressed
+    if(hitbox_index_selected!=-1)
+    {
+        int i=0;
+        for(Node hitboxes_node=current_frame.getFirstChild();hitboxes_node!=null;hitboxes_node=hitboxes_node.getNextSibling())//Hitbox loop
+        {
+            if(hitboxes_node.getNodeName().equals("Hitboxes"))
+            {
+                if(((Element)hitboxes_node).getAttribute("variable").equals(hitbox_color_selected))
+                {
+                    for(Node hitbox=hitboxes_node.getFirstChild();hitbox!=null;hitbox=hitbox.getNextSibling())//Red Hitboxes loop
+                    {
+                        if(hitbox.getNodeName().equals("Hitbox"))
+                        {
+                            if(i==hitbox_index_selected)
+                            {
+                                hitbox.getParentNode().removeChild(hitbox);
+                                break;
+                            }
+                            i++;
+                        }
+                    }
+                }
+            }
+        }
+
+        updateHitboxes(current_frame);
+    }
+    else
+    {
+        JOptionPane.showMessageDialog(null, "Select a hitbox in a frame first.", "Be careful", JOptionPane.INFORMATION_MESSAGE);
+    }
+}//GEN-LAST:event_jButton1MousePressed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton button_add_blue_hitbox;
+    private javax.swing.JButton button_add_red_hitbox;
     private javax.swing.JPanel image_panel;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
