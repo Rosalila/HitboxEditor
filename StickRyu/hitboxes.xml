@@ -331,7 +331,7 @@
                 <Hitbox x1="-10" x2="110" y1="320" y2="280"/>
             </Hitboxes>
             <Hitboxes to_opponent="no" variable="red">
-                <Hitbox x1="-10" x2="110" y1="326" y2="280"/>
+                <Hitbox x1="-10" x2="110" y1="320" y2="280"/>
             </Hitboxes>
         </Frame>
         <Frame number="3">

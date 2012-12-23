@@ -23,8 +23,10 @@ public class ImagePanel extends JPanel{
 
     public BufferedImage original_image;
     public BufferedImage scaled_image;
+    public BufferedImage axis;
     public int x;
     public int y;
+    int axis_x,axis_y;
     public double scale;
     Graphics g;
     ArrayList<Hitbox> blue_hitboxes,red_hitboxes;
@@ -32,11 +34,14 @@ public class ImagePanel extends JPanel{
     public ImagePanel() {
         x=0;
         y=0;
+        axis_x=0;
+        axis_y=0;
         scale=1;
         blue_hitboxes = new ArrayList<Hitbox>();
         red_hitboxes = new ArrayList<Hitbox>();
        try {
-          original_image = ImageIO.read(new File("LogoEngine.png"));
+          original_image = ImageIO.read(new File("assets/LogoEngine.png"));
+          axis = ImageIO.read(new File("assets/Axis.png"));
        } catch (IOException ex) {
             // handle exception...
        }
@@ -49,7 +54,7 @@ public class ImagePanel extends JPanel{
         myScale();
         int pos_x=this.getWidth()/2-scaled_image.getWidth()/2+x;
         int pos_y=this.getHeight()-scaled_image.getHeight()-y;
-        this.getHeight();
+        
         g.drawImage(scaled_image, pos_x,pos_y, null);
         g.setColor(Color.blue);
         for(int i=0;i<blue_hitboxes.size();i++)
@@ -71,6 +76,10 @@ public class ImagePanel extends JPanel{
             
             g.drawRect(x1-1, y1-1, Math.abs(x2-x1), Math.abs(y2-y1));
         }
+        axis_x=this.getWidth()/2-axis.getWidth()/2;
+        axis_y=this.getHeight()-axis.getHeight()-3;
+        
+        g.drawImage(axis, axis_x,axis_y, null);
     }
 
     void myScale()
