@@ -137,7 +137,7 @@
                                               </Group>
                                           </Group>
                                       </Group>
-                                      <EmptySpace pref="29" max="32767" attributes="0"/>
+                                      <EmptySpace pref="81" max="32767" attributes="0"/>
                                       <Component id="image_panel" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                                   </Group>
@@ -146,12 +146,22 @@
                                       <EmptySpace pref="731" max="32767" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
-                                      <Component id="button_add_blue_hitbox" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="button_add_red_hitbox" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="jButton1" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="555" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="button_remove_blue_list" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="button_add_blue_hitbox" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="button_clean_blue_list" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Component id="button_add_red_hitbox" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace min="-2" pref="65" max="-2" attributes="0"/>
+                                              <Component id="button_delete_selected" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Component id="button_clean_red_list" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="button_remove_red_list" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace min="-2" pref="378" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -200,11 +210,21 @@
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="button_add_blue_hitbox" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="button_add_red_hitbox" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="button_delete_selected" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace pref="63" max="32767" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="button_clean_red_list" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="button_clean_blue_list" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="button_remove_blue_list" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="button_remove_red_list" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace pref="16" max="32767" attributes="0"/>
                               <Component id="label_current_sprite" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -410,13 +430,49 @@
                         <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="button_add_blue_hitboxMousePressed"/>
                       </Events>
                     </Component>
-                    <Component class="javax.swing.JButton" name="jButton1">
+                    <Component class="javax.swing.JButton" name="button_delete_selected">
                       <Properties>
-                        <Property name="text" type="java.lang.String" resourceKey="jButton1.text"/>
-                        <Property name="name" type="java.lang.String" value="jButton1" noResource="true"/>
+                        <Property name="text" type="java.lang.String" resourceKey="button_delete_selected.text"/>
+                        <Property name="name" type="java.lang.String" value="button_delete_selected" noResource="true"/>
                       </Properties>
                       <Events>
-                        <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jButton1MousePressed"/>
+                        <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="button_delete_selectedMousePressed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="button_clean_blue_list">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" resourceKey="button_clean_blue_list.text"/>
+                        <Property name="name" type="java.lang.String" value="button_clean_blue_list" noResource="true"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="button_clean_blue_listMousePressed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="button_clean_red_list">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" resourceKey="button_clean_red_list.text"/>
+                        <Property name="name" type="java.lang.String" value="button_clean_red_list" noResource="true"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="button_clean_red_listMousePressed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="button_remove_blue_list">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" resourceKey="button_remove_blue_list.text"/>
+                        <Property name="name" type="java.lang.String" value="button_remove_blue_list" noResource="true"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="button_remove_blue_listMousePressed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="button_remove_red_list">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" resourceKey="button_remove_red_list.text"/>
+                        <Property name="name" type="java.lang.String" value="button_remove_red_list" noResource="true"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="button_remove_red_listMousePressed"/>
                       </Events>
                     </Component>
                   </SubComponents>

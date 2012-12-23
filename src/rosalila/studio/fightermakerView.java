@@ -208,7 +208,11 @@ public class fightermakerView extends FrameView implements TreeSelectionListener
         jLabel7 = new javax.swing.JLabel();
         button_add_red_hitbox = new javax.swing.JButton();
         button_add_blue_hitbox = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        button_delete_selected = new javax.swing.JButton();
+        button_clean_blue_list = new javax.swing.JButton();
+        button_clean_red_list = new javax.swing.JButton();
+        button_remove_blue_list = new javax.swing.JButton();
+        button_remove_red_list = new javax.swing.JButton();
         jScrollPane8 = new javax.swing.JScrollPane();
         list_moves = new javax.swing.JList();
         menuBar = new javax.swing.JMenuBar();
@@ -367,11 +371,43 @@ public class fightermakerView extends FrameView implements TreeSelectionListener
             }
         });
 
-        jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
-        jButton1.setName("jButton1"); // NOI18N
-        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+        button_delete_selected.setText(resourceMap.getString("button_delete_selected.text")); // NOI18N
+        button_delete_selected.setName("button_delete_selected"); // NOI18N
+        button_delete_selected.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                jButton1MousePressed(evt);
+                button_delete_selectedMousePressed(evt);
+            }
+        });
+
+        button_clean_blue_list.setText(resourceMap.getString("button_clean_blue_list.text")); // NOI18N
+        button_clean_blue_list.setName("button_clean_blue_list"); // NOI18N
+        button_clean_blue_list.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                button_clean_blue_listMousePressed(evt);
+            }
+        });
+
+        button_clean_red_list.setText(resourceMap.getString("button_clean_red_list.text")); // NOI18N
+        button_clean_red_list.setName("button_clean_red_list"); // NOI18N
+        button_clean_red_list.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                button_clean_red_listMousePressed(evt);
+            }
+        });
+
+        button_remove_blue_list.setText(resourceMap.getString("button_remove_blue_list.text")); // NOI18N
+        button_remove_blue_list.setName("button_remove_blue_list"); // NOI18N
+        button_remove_blue_list.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                button_remove_blue_listMousePressed(evt);
+            }
+        });
+
+        button_remove_red_list.setText(resourceMap.getString("button_remove_red_list.text")); // NOI18N
+        button_remove_red_list.setName("button_remove_red_list"); // NOI18N
+        button_remove_red_list.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                button_remove_red_listMousePressed(evt);
             }
         });
 
@@ -415,19 +451,26 @@ public class fightermakerView extends FrameView implements TreeSelectionListener
                                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel3)
                                     .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 81, Short.MAX_VALUE)
                         .addComponent(image_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(27, 27, 27))
                     .addGroup(jPanel11Layout.createSequentialGroup()
                         .addComponent(label_current_sprite)
                         .addContainerGap(731, Short.MAX_VALUE))
                     .addGroup(jPanel11Layout.createSequentialGroup()
-                        .addComponent(button_add_blue_hitbox)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button_add_red_hitbox)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1)
-                        .addGap(555, 555, 555))))
+                        .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(button_remove_blue_list)
+                            .addComponent(button_add_blue_hitbox)
+                            .addComponent(button_clean_blue_list))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel11Layout.createSequentialGroup()
+                                .addComponent(button_add_red_hitbox)
+                                .addGap(65, 65, 65)
+                                .addComponent(button_delete_selected))
+                            .addComponent(button_clean_red_list)
+                            .addComponent(button_remove_red_list))
+                        .addGap(378, 378, 378))))
         );
         jPanel11Layout.setVerticalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -465,10 +508,18 @@ public class fightermakerView extends FrameView implements TreeSelectionListener
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(button_add_blue_hitbox)
                     .addComponent(button_add_red_hitbox)
-                    .addComponent(jButton1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
+                    .addComponent(button_delete_selected))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(button_clean_red_list)
+                    .addComponent(button_clean_blue_list))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(button_remove_blue_list)
+                    .addComponent(button_remove_red_list))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
                 .addComponent(label_current_sprite)
-                .addGap(36, 36, 36))
+                .addGap(21, 21, 21))
         );
 
         jScrollPane8.setName("jScrollPane8"); // NOI18N
@@ -616,6 +667,7 @@ private void jMenuItem1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:
 }//GEN-LAST:event_jMenuItem1MousePressed
 
 private void list_movesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_list_movesMousePressed
+    current_move=null;
     current_frame=null;
     current_hitbox=null;
     hitbox_index_selected=-1;
@@ -1035,12 +1087,13 @@ private void button_add_red_hitboxMousePressed(java.awt.event.MouseEvent evt) {/
         if(current_frame==null)
         {
             Element new_frame = hitboxes_doc.createElement("Frame");
-            new_frame.setAttribute("Frame", ""+(frame_index_selected+1));
+            new_frame.setAttribute("number", ""+(frame_index_selected+1));
             if(current_move==null)
             {
                 Element new_move = hitboxes_doc.createElement("Move");
                 new_move.setAttribute("name", ""+list_moves.getSelectedValue());
                 hitboxes_doc.getFirstChild().appendChild(new_move);
+                current_move=new_move;
             }
             current_move.appendChild(new_frame);
             current_frame=new_frame;
@@ -1082,12 +1135,13 @@ private void button_add_blue_hitboxMousePressed(java.awt.event.MouseEvent evt) {
         if(current_frame==null)
         {
             Element new_frame = hitboxes_doc.createElement("Frame");
-            new_frame.setAttribute("Frame", ""+(frame_index_selected+1));
+            new_frame.setAttribute("number", ""+(frame_index_selected+1));
             if(current_move==null)
             {
                 Element new_move = hitboxes_doc.createElement("Move");
                 new_move.setAttribute("name", ""+list_moves.getSelectedValue());
                 hitboxes_doc.getFirstChild().appendChild(new_move);
+                current_move=new_move;
             }
             current_move.appendChild(new_frame);
             current_frame=new_frame;
@@ -1123,7 +1177,7 @@ private void button_add_blue_hitboxMousePressed(java.awt.event.MouseEvent evt) {
     
 }//GEN-LAST:event_button_add_blue_hitboxMousePressed
 
-private void jButton1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MousePressed
+private void button_delete_selectedMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_button_delete_selectedMousePressed
     if(hitbox_index_selected!=-1)
     {
         int i=0;
@@ -1155,13 +1209,187 @@ private void jButton1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
     {
         JOptionPane.showMessageDialog(null, "Select a hitbox in a frame first.", "Be careful", JOptionPane.INFORMATION_MESSAGE);
     }
-}//GEN-LAST:event_jButton1MousePressed
+}//GEN-LAST:event_button_delete_selectedMousePressed
+
+private void button_clean_blue_listMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_button_clean_blue_listMousePressed
+    if(frame_index_selected!=-1)
+    {
+        if(current_frame==null)
+        {
+            Element new_frame = hitboxes_doc.createElement("Frame");
+            new_frame.setAttribute("number", ""+(frame_index_selected+1));
+            if(current_move==null)
+            {
+                Element new_move = hitboxes_doc.createElement("Move");
+                new_move.setAttribute("name", ""+list_moves.getSelectedValue());
+                hitboxes_doc.getFirstChild().appendChild(new_move);
+                current_move=new_move;
+            }
+            current_move.appendChild(new_frame);
+            current_frame=new_frame;
+        }
+        int i=0;
+        boolean hitboxes_exist=false;
+        for(Node hitboxes_node=current_frame.getFirstChild();hitboxes_node!=null;hitboxes_node=hitboxes_node.getNextSibling())//Hitbox loop
+        {
+            if(hitboxes_node.getNodeName().equals("Hitboxes"))
+            {
+                if(((Element)hitboxes_node).getAttribute("variable").equals("blue"))
+                {
+                    hitboxes_exist=true;
+                    while(hitboxes_node.hasChildNodes())
+                        hitboxes_node.removeChild(hitboxes_node.getFirstChild());
+                }
+            }
+        }
+        
+        if(!hitboxes_exist)
+        {
+            Element new_hitboxes=hitboxes_doc.createElement("Hitboxes");
+            new_hitboxes.setAttribute("to_opponent", "no");
+            new_hitboxes.setAttribute("variable", "blue");
+            current_frame.appendChild(new_hitboxes);
+            
+        }
+        
+        updateHitboxes(current_frame);
+    }
+    else
+    {
+        JOptionPane.showMessageDialog(null, "Select a frame first.", "Be careful", JOptionPane.INFORMATION_MESSAGE);
+    }
+}//GEN-LAST:event_button_clean_blue_listMousePressed
+
+private void button_clean_red_listMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_button_clean_red_listMousePressed
+    if(frame_index_selected!=-1)
+    {
+        if(current_frame==null)
+        {
+            Element new_frame = hitboxes_doc.createElement("Frame");
+            new_frame.setAttribute("number", ""+(frame_index_selected+1));
+            if(current_move==null)
+            {
+                Element new_move = hitboxes_doc.createElement("Move");
+                new_move.setAttribute("name", ""+list_moves.getSelectedValue());
+                hitboxes_doc.getFirstChild().appendChild(new_move);
+                current_move=new_move;
+            }
+            current_move.appendChild(new_frame);
+            current_frame=new_frame;
+        }
+        int i=0;
+        boolean hitboxes_exist=false;
+        for(Node hitboxes_node=current_frame.getFirstChild();hitboxes_node!=null;hitboxes_node=hitboxes_node.getNextSibling())//Hitbox loop
+        {
+            if(hitboxes_node.getNodeName().equals("Hitboxes"))
+            {
+                if(((Element)hitboxes_node).getAttribute("variable").equals("red"))
+                {
+                    hitboxes_exist=true;
+                    while(hitboxes_node.hasChildNodes())
+                        hitboxes_node.removeChild(hitboxes_node.getFirstChild());
+                }
+            }
+        }
+        
+        if(!hitboxes_exist)
+        {
+            Element new_hitboxes=hitboxes_doc.createElement("Hitboxes");
+            new_hitboxes.setAttribute("to_opponent", "no");
+            new_hitboxes.setAttribute("variable", "red");
+            current_frame.appendChild(new_hitboxes);
+            
+        }
+        
+        updateHitboxes(current_frame);
+    }
+    else
+    {
+        JOptionPane.showMessageDialog(null, "Select a frame first.", "Be careful", JOptionPane.INFORMATION_MESSAGE);
+    }
+}//GEN-LAST:event_button_clean_red_listMousePressed
+
+private void button_remove_blue_listMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_button_remove_blue_listMousePressed
+    if(frame_index_selected!=-1)
+    {
+        if(current_frame==null)
+        {
+            Element new_frame = hitboxes_doc.createElement("Frame");
+            new_frame.setAttribute("number", ""+(frame_index_selected+1));
+            if(current_move==null)
+            {
+                Element new_move = hitboxes_doc.createElement("Move");
+                new_move.setAttribute("name", ""+list_moves.getSelectedValue());
+                hitboxes_doc.getFirstChild().appendChild(new_move);
+                current_move=new_move;
+            }
+            current_move.appendChild(new_frame);
+            current_frame=new_frame;
+        }
+        for(Node hitboxes_node=current_frame.getFirstChild();hitboxes_node!=null;hitboxes_node=hitboxes_node.getNextSibling())//Hitbox loop
+        {
+            if(hitboxes_node.getNodeName().equals("Hitboxes"))
+            {
+                if(((Element)hitboxes_node).getAttribute("variable").equals("blue"))
+                {
+                    current_frame.removeChild(hitboxes_node);
+                }
+            }
+        }
+        frame_index_selected=-1;
+        updateHitboxes(current_frame);
+    }
+    else
+    {
+        JOptionPane.showMessageDialog(null, "Select a frame first.", "Be careful", JOptionPane.INFORMATION_MESSAGE);
+    }
+}//GEN-LAST:event_button_remove_blue_listMousePressed
+
+private void button_remove_red_listMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_button_remove_red_listMousePressed
+    if(frame_index_selected!=-1)
+    {
+        if(current_frame==null)
+        {
+            Element new_frame = hitboxes_doc.createElement("Frame");
+            new_frame.setAttribute("number", ""+(frame_index_selected+1));
+            if(current_move==null)
+            {
+                Element new_move = hitboxes_doc.createElement("Move");
+                new_move.setAttribute("name", ""+list_moves.getSelectedValue());
+                hitboxes_doc.getFirstChild().appendChild(new_move);
+                current_move=new_move;
+            }
+            current_move.appendChild(new_frame);
+            current_frame=new_frame;
+        }
+        for(Node hitboxes_node=current_frame.getFirstChild();hitboxes_node!=null;hitboxes_node=hitboxes_node.getNextSibling())//Hitbox loop
+        {
+            if(hitboxes_node.getNodeName().equals("Hitboxes"))
+            {
+                if(((Element)hitboxes_node).getAttribute("variable").equals("red"))
+                {
+                    current_frame.removeChild(hitboxes_node);
+                }
+            }
+        }
+        frame_index_selected=-1;
+        updateHitboxes(current_frame);
+    }
+    else
+    {
+        JOptionPane.showMessageDialog(null, "Select a frame first.", "Be careful", JOptionPane.INFORMATION_MESSAGE);
+    }
+}//GEN-LAST:event_button_remove_red_listMousePressed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton button_add_blue_hitbox;
     private javax.swing.JButton button_add_red_hitbox;
+    private javax.swing.JButton button_clean_blue_list;
+    private javax.swing.JButton button_clean_red_list;
+    private javax.swing.JButton button_delete_selected;
+    private javax.swing.JButton button_remove_blue_list;
+    private javax.swing.JButton button_remove_red_list;
     private javax.swing.JPanel image_panel;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

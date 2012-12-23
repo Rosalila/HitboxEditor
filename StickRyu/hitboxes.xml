@@ -322,6 +322,7 @@
             </Hitboxes>
             <Hitboxes to_opponent="no" variable="red">
                 <hitbox x1="3" x2="110" y1="311" y2="292"/>
+                <Hitbox x1="0" x2="58" y1="27" y2="0"/>
             </Hitboxes>
         </Frame>
         <Frame number="2">
@@ -339,7 +340,6 @@
             </Hitboxes>
             <Hitboxes to_opponent="no" variable="red"/>
         </Frame>
-        <Frame Frame="1"/>
     </Move>
     <Move name="2a">
         <Frame number="1">
@@ -408,6 +408,13 @@
                 <Hitbox x1="-50" x2="50" y1="100" y2="0"/>
             </Hitboxes>
             <Hitboxes to_opponent="no" variable="red"/>
+        </Frame>
+    </Move>
+    <Move name="stand light kick">
+        <Frame number="2">
+            <Hitboxes to_opponent="no" variable="blue">
+                <Hitbox x1="0" x2="0" y1="0" y2="0"/>
+            </Hitboxes>
         </Frame>
     </Move>
 </HitboxesFile>
