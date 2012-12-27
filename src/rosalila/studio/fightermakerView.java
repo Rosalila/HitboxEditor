@@ -186,38 +186,37 @@ public class fightermakerView extends FrameView implements TreeSelectionListener
         mainPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
-        jPanel11 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        image_panel = new rosalila.studio.ImagePanel();
-        jScrollPane9 = new javax.swing.JScrollPane();
-        list_red_hitboxes = new javax.swing.JList();
-        jScrollPane10 = new javax.swing.JScrollPane();
-        list_frames = new javax.swing.JList();
-        jScrollPane11 = new javax.swing.JScrollPane();
-        list_blue_hitboxes = new javax.swing.JList();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        label_current_sprite = new javax.swing.JLabel();
-        spinner_x1 = new javax.swing.JSpinner();
-        spinner_y1 = new javax.swing.JSpinner();
-        spinner_x2 = new javax.swing.JSpinner();
-        spinner_y2 = new javax.swing.JSpinner();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        button_add_red_hitbox = new javax.swing.JButton();
-        button_add_blue_hitbox = new javax.swing.JButton();
-        button_delete_selected = new javax.swing.JButton();
-        button_clean_blue_list = new javax.swing.JButton();
-        button_clean_red_list = new javax.swing.JButton();
-        button_remove_blue_list = new javax.swing.JButton();
-        button_remove_red_list = new javax.swing.JButton();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
         jScrollPane8 = new javax.swing.JScrollPane();
         list_moves = new javax.swing.JList();
         jLabel9 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jScrollPane10 = new javax.swing.JScrollPane();
+        list_frames = new javax.swing.JList();
+        jLabel8 = new javax.swing.JLabel();
+        button_clean_blue_list = new javax.swing.JButton();
+        button_remove_blue_list = new javax.swing.JButton();
+        button_clean_red_list = new javax.swing.JButton();
+        button_remove_red_list = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jScrollPane11 = new javax.swing.JScrollPane();
+        list_blue_hitboxes = new javax.swing.JList();
+        jLabel3 = new javax.swing.JLabel();
+        jScrollPane9 = new javax.swing.JScrollPane();
+        list_red_hitboxes = new javax.swing.JList();
+        jLabel10 = new javax.swing.JLabel();
+        spinner_x1 = new javax.swing.JSpinner();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        spinner_y1 = new javax.swing.JSpinner();
+        jLabel6 = new javax.swing.JLabel();
+        spinner_x2 = new javax.swing.JSpinner();
+        jLabel7 = new javax.swing.JLabel();
+        spinner_y2 = new javax.swing.JSpinner();
+        button_add_red_hitbox = new javax.swing.JButton();
+        button_add_blue_hitbox = new javax.swing.JButton();
+        button_delete_selected = new javax.swing.JButton();
+        label_current_sprite = new javax.swing.JLabel();
+        image_panel = new rosalila.studio.ImagePanel();
         menuBar = new javax.swing.JMenuBar();
         javax.swing.JMenu fileMenu = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -235,53 +234,24 @@ public class fightermakerView extends FrameView implements TreeSelectionListener
         jPanel1.setName("jPanel1"); // NOI18N
         jPanel1.setPreferredSize(new java.awt.Dimension(1408, 800));
 
-        jPanel11.setName("jPanel11"); // NOI18N
-        jPanel11.setPreferredSize(new java.awt.Dimension(900, 507));
+        jScrollPane8.setName("jScrollPane8"); // NOI18N
+
+        list_moves.setName("list_moves"); // NOI18N
+        list_moves.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                list_movesMousePressed(evt);
+            }
+        });
+        jScrollPane8.setViewportView(list_moves);
 
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(rosalila.studio.fightermaker.class).getContext().getResourceMap(fightermakerView.class);
+        jLabel9.setFont(resourceMap.getFont("jLabel9.font")); // NOI18N
+        jLabel9.setText(resourceMap.getString("jLabel9.text")); // NOI18N
+        jLabel9.setName("jLabel9"); // NOI18N
+
         jLabel1.setFont(resourceMap.getFont("jLabel1.font")); // NOI18N
         jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
         jLabel1.setName("jLabel1"); // NOI18N
-
-        image_panel.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        image_panel.setName("image_panel"); // NOI18N
-        image_panel.addMouseWheelListener(new java.awt.event.MouseWheelListener() {
-            public void mouseWheelMoved(java.awt.event.MouseWheelEvent evt) {
-                image_panelMouseWheelMoved(evt);
-            }
-        });
-        image_panel.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                image_panelMouseClicked(evt);
-            }
-        });
-        image_panel.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseDragged(java.awt.event.MouseEvent evt) {
-                image_panelMouseDragged(evt);
-            }
-        });
-
-        javax.swing.GroupLayout image_panelLayout = new javax.swing.GroupLayout(image_panel);
-        image_panel.setLayout(image_panelLayout);
-        image_panelLayout.setHorizontalGroup(
-            image_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 530, Short.MAX_VALUE)
-        );
-        image_panelLayout.setVerticalGroup(
-            image_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 609, Short.MAX_VALUE)
-        );
-
-        jScrollPane9.setName("jScrollPane9"); // NOI18N
-
-        list_red_hitboxes.setBackground(resourceMap.getColor("list_red_hitboxes.background")); // NOI18N
-        list_red_hitboxes.setName("list_red_hitboxes"); // NOI18N
-        list_red_hitboxes.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                list_red_hitboxesMousePressed(evt);
-            }
-        });
-        jScrollPane9.setViewportView(list_red_hitboxes);
 
         jScrollPane10.setName("jScrollPane10"); // NOI18N
 
@@ -292,6 +262,50 @@ public class fightermakerView extends FrameView implements TreeSelectionListener
             }
         });
         jScrollPane10.setViewportView(list_frames);
+
+        jLabel8.setFont(resourceMap.getFont("jLabel8.font")); // NOI18N
+        jLabel8.setText(resourceMap.getString("jLabel8.text")); // NOI18N
+        jLabel8.setName("jLabel8"); // NOI18N
+
+        button_clean_blue_list.setBackground(resourceMap.getColor("button_clean_blue_list.background")); // NOI18N
+        button_clean_blue_list.setText(resourceMap.getString("button_clean_blue_list.text")); // NOI18N
+        button_clean_blue_list.setName("button_clean_blue_list"); // NOI18N
+        button_clean_blue_list.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                button_clean_blue_listMousePressed(evt);
+            }
+        });
+
+        button_remove_blue_list.setBackground(resourceMap.getColor("button_remove_blue_list.background")); // NOI18N
+        button_remove_blue_list.setText(resourceMap.getString("button_remove_blue_list.text")); // NOI18N
+        button_remove_blue_list.setName("button_remove_blue_list"); // NOI18N
+        button_remove_blue_list.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                button_remove_blue_listMousePressed(evt);
+            }
+        });
+
+        button_clean_red_list.setBackground(resourceMap.getColor("button_clean_red_list.background")); // NOI18N
+        button_clean_red_list.setText(resourceMap.getString("button_clean_red_list.text")); // NOI18N
+        button_clean_red_list.setName("button_clean_red_list"); // NOI18N
+        button_clean_red_list.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                button_clean_red_listMousePressed(evt);
+            }
+        });
+
+        button_remove_red_list.setBackground(resourceMap.getColor("button_remove_red_list.background")); // NOI18N
+        button_remove_red_list.setText(resourceMap.getString("button_remove_red_list.text")); // NOI18N
+        button_remove_red_list.setName("button_remove_red_list"); // NOI18N
+        button_remove_red_list.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                button_remove_red_listMousePressed(evt);
+            }
+        });
+
+        jLabel2.setFont(resourceMap.getFont("jLabel2.font")); // NOI18N
+        jLabel2.setText(resourceMap.getString("jLabel2.text")); // NOI18N
+        jLabel2.setName("jLabel2"); // NOI18N
 
         jScrollPane11.setName("jScrollPane11"); // NOI18N
 
@@ -304,17 +318,24 @@ public class fightermakerView extends FrameView implements TreeSelectionListener
         });
         jScrollPane11.setViewportView(list_blue_hitboxes);
 
-        jLabel2.setFont(resourceMap.getFont("jLabel2.font")); // NOI18N
-        jLabel2.setText(resourceMap.getString("jLabel2.text")); // NOI18N
-        jLabel2.setName("jLabel2"); // NOI18N
-
         jLabel3.setFont(resourceMap.getFont("jLabel3.font")); // NOI18N
         jLabel3.setText(resourceMap.getString("jLabel3.text")); // NOI18N
         jLabel3.setName("jLabel3"); // NOI18N
 
-        label_current_sprite.setFont(resourceMap.getFont("label_current_sprite.font")); // NOI18N
-        label_current_sprite.setText(resourceMap.getString("label_current_sprite.text")); // NOI18N
-        label_current_sprite.setName("label_current_sprite"); // NOI18N
+        jScrollPane9.setName("jScrollPane9"); // NOI18N
+
+        list_red_hitboxes.setBackground(resourceMap.getColor("list_red_hitboxes.background")); // NOI18N
+        list_red_hitboxes.setName("list_red_hitboxes"); // NOI18N
+        list_red_hitboxes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                list_red_hitboxesMousePressed(evt);
+            }
+        });
+        jScrollPane9.setViewportView(list_red_hitboxes);
+
+        jLabel10.setFont(resourceMap.getFont("jLabel10.font")); // NOI18N
+        jLabel10.setText(resourceMap.getString("jLabel10.text")); // NOI18N
+        jLabel10.setName("jLabel10"); // NOI18N
 
         spinner_x1.setName("spinner_x1"); // NOI18N
         spinner_x1.addChangeListener(new javax.swing.event.ChangeListener() {
@@ -328,12 +349,21 @@ public class fightermakerView extends FrameView implements TreeSelectionListener
             }
         });
 
+        jLabel4.setText(resourceMap.getString("jLabel4.text")); // NOI18N
+        jLabel4.setName("jLabel4"); // NOI18N
+
+        jLabel5.setText(resourceMap.getString("jLabel5.text")); // NOI18N
+        jLabel5.setName("jLabel5"); // NOI18N
+
         spinner_y1.setName("spinner_y1"); // NOI18N
         spinner_y1.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 spinner_y1StateChanged(evt);
             }
         });
+
+        jLabel6.setText(resourceMap.getString("jLabel6.text")); // NOI18N
+        jLabel6.setName("jLabel6"); // NOI18N
 
         spinner_x2.setName("spinner_x2"); // NOI18N
         spinner_x2.addChangeListener(new javax.swing.event.ChangeListener() {
@@ -342,24 +372,15 @@ public class fightermakerView extends FrameView implements TreeSelectionListener
             }
         });
 
+        jLabel7.setText(resourceMap.getString("jLabel7.text")); // NOI18N
+        jLabel7.setName("jLabel7"); // NOI18N
+
         spinner_y2.setName("spinner_y2"); // NOI18N
         spinner_y2.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 spinner_y2StateChanged(evt);
             }
         });
-
-        jLabel4.setText(resourceMap.getString("jLabel4.text")); // NOI18N
-        jLabel4.setName("jLabel4"); // NOI18N
-
-        jLabel5.setText(resourceMap.getString("jLabel5.text")); // NOI18N
-        jLabel5.setName("jLabel5"); // NOI18N
-
-        jLabel6.setText(resourceMap.getString("jLabel6.text")); // NOI18N
-        jLabel6.setName("jLabel6"); // NOI18N
-
-        jLabel7.setText(resourceMap.getString("jLabel7.text")); // NOI18N
-        jLabel7.setName("jLabel7"); // NOI18N
 
         button_add_red_hitbox.setBackground(resourceMap.getColor("button_add_red_hitbox.background")); // NOI18N
         button_add_red_hitbox.setText(resourceMap.getString("button_add_red_hitbox.text")); // NOI18N
@@ -388,172 +409,38 @@ public class fightermakerView extends FrameView implements TreeSelectionListener
             }
         });
 
-        button_clean_blue_list.setBackground(resourceMap.getColor("button_clean_blue_list.background")); // NOI18N
-        button_clean_blue_list.setText(resourceMap.getString("button_clean_blue_list.text")); // NOI18N
-        button_clean_blue_list.setName("button_clean_blue_list"); // NOI18N
-        button_clean_blue_list.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                button_clean_blue_listMousePressed(evt);
+        label_current_sprite.setFont(resourceMap.getFont("label_current_sprite.font")); // NOI18N
+        label_current_sprite.setText(resourceMap.getString("label_current_sprite.text")); // NOI18N
+        label_current_sprite.setName("label_current_sprite"); // NOI18N
+
+        image_panel.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        image_panel.setName("image_panel"); // NOI18N
+        image_panel.addMouseWheelListener(new java.awt.event.MouseWheelListener() {
+            public void mouseWheelMoved(java.awt.event.MouseWheelEvent evt) {
+                image_panelMouseWheelMoved(evt);
+            }
+        });
+        image_panel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                image_panelMouseClicked(evt);
+            }
+        });
+        image_panel.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                image_panelMouseDragged(evt);
             }
         });
 
-        button_clean_red_list.setBackground(resourceMap.getColor("button_clean_red_list.background")); // NOI18N
-        button_clean_red_list.setText(resourceMap.getString("button_clean_red_list.text")); // NOI18N
-        button_clean_red_list.setName("button_clean_red_list"); // NOI18N
-        button_clean_red_list.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                button_clean_red_listMousePressed(evt);
-            }
-        });
-
-        button_remove_blue_list.setBackground(resourceMap.getColor("button_remove_blue_list.background")); // NOI18N
-        button_remove_blue_list.setText(resourceMap.getString("button_remove_blue_list.text")); // NOI18N
-        button_remove_blue_list.setName("button_remove_blue_list"); // NOI18N
-        button_remove_blue_list.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                button_remove_blue_listMousePressed(evt);
-            }
-        });
-
-        button_remove_red_list.setBackground(resourceMap.getColor("button_remove_red_list.background")); // NOI18N
-        button_remove_red_list.setText(resourceMap.getString("button_remove_red_list.text")); // NOI18N
-        button_remove_red_list.setName("button_remove_red_list"); // NOI18N
-        button_remove_red_list.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                button_remove_red_listMousePressed(evt);
-            }
-        });
-
-        jLabel8.setFont(resourceMap.getFont("jLabel8.font")); // NOI18N
-        jLabel8.setText(resourceMap.getString("jLabel8.text")); // NOI18N
-        jLabel8.setName("jLabel8"); // NOI18N
-
-        jLabel10.setFont(resourceMap.getFont("jLabel10.font")); // NOI18N
-        jLabel10.setText(resourceMap.getString("jLabel10.text")); // NOI18N
-        jLabel10.setName("jLabel10"); // NOI18N
-
-        javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
-        jPanel11.setLayout(jPanel11Layout);
-        jPanel11Layout.setHorizontalGroup(
-            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel11Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(label_current_sprite)
-                    .addComponent(jLabel1)
-                    .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 366, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8)
-                    .addGroup(jPanel11Layout.createSequentialGroup()
-                        .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel11Layout.createSequentialGroup()
-                                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(button_clean_blue_list)
-                                    .addComponent(button_remove_blue_list)
-                                    .addComponent(jLabel2))
-                                .addGap(48, 48, 48))
-                            .addGroup(jPanel11Layout.createSequentialGroup()
-                                .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                        .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(button_remove_red_list)
-                            .addComponent(button_clean_red_list)
-                            .addGroup(jPanel11Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(spinner_y2, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                    .addComponent(jLabel10)
-                    .addGroup(jPanel11Layout.createSequentialGroup()
-                        .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel11Layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addGap(10, 10, 10)
-                                .addComponent(spinner_x1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel5))
-                            .addComponent(button_add_blue_hitbox))
-                        .addGap(18, 18, 18)
-                        .addComponent(spinner_y1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel11Layout.createSequentialGroup()
-                                .addComponent(jLabel6)
-                                .addGap(18, 18, 18)
-                                .addComponent(spinner_x2, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel7))
-                            .addComponent(button_add_red_hitbox)))
-                    .addComponent(button_delete_selected))
-                .addGap(18, 18, 18)
-                .addComponent(image_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        javax.swing.GroupLayout image_panelLayout = new javax.swing.GroupLayout(image_panel);
+        image_panel.setLayout(image_panelLayout);
+        image_panelLayout.setHorizontalGroup(
+            image_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 357, Short.MAX_VALUE)
         );
-        jPanel11Layout.setVerticalGroup(
-            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel11Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(button_clean_blue_list)
-                    .addComponent(button_clean_red_list))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(button_remove_blue_list)
-                    .addComponent(button_remove_red_list))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel10)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(spinner_x1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5)
-                    .addComponent(spinner_y1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6)
-                    .addComponent(spinner_x2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7)
-                    .addComponent(spinner_y2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(button_add_blue_hitbox)
-                    .addComponent(button_add_red_hitbox))
-                .addGap(5, 5, 5)
-                .addComponent(button_delete_selected)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(label_current_sprite)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
-                .addContainerGap(37, Short.MAX_VALUE)
-                .addComponent(image_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+        image_panelLayout.setVerticalGroup(
+            image_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 634, Short.MAX_VALUE)
         );
-
-        jScrollPane8.setName("jScrollPane8"); // NOI18N
-
-        list_moves.setName("list_moves"); // NOI18N
-        list_moves.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                list_movesMousePressed(evt);
-            }
-        });
-        jScrollPane8.setViewportView(list_moves);
-
-        jLabel9.setFont(resourceMap.getFont("jLabel9.font")); // NOI18N
-        jLabel9.setText(resourceMap.getString("jLabel9.text")); // NOI18N
-        jLabel9.setName("jLabel9"); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -564,21 +451,115 @@ public class fightermakerView extends FrameView implements TreeSelectionListener
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel9)
                     .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, 858, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(274, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(label_current_sprite)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 366, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel8)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(button_clean_blue_list)
+                                            .addComponent(button_remove_blue_list)
+                                            .addComponent(jLabel2))
+                                        .addGap(48, 48, 48))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3)
+                                    .addComponent(button_remove_red_list)
+                                    .addComponent(button_clean_red_list)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(spinner_y2, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addComponent(jLabel10)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel4)
+                                        .addGap(10, 10, 10)
+                                        .addComponent(spinner_x1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jLabel5))
+                                    .addComponent(button_add_blue_hitbox))
+                                .addGap(18, 18, 18)
+                                .addComponent(spinner_y1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel6)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(spinner_x2, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jLabel7))
+                                    .addComponent(button_add_red_hitbox)))
+                            .addComponent(button_delete_selected))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(image_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(380, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(jLabel9)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+                .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 638, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(84, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(31, 31, 31)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(button_clean_blue_list)
+                    .addComponent(button_clean_red_list))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(button_remove_blue_list)
+                    .addComponent(button_remove_red_list))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, 653, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
-                        .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 638, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel10)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(spinner_x1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5)
+                    .addComponent(spinner_y1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6)
+                    .addComponent(spinner_x2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7)
+                    .addComponent(spinner_y2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(button_add_blue_hitbox)
+                    .addComponent(button_add_red_hitbox))
+                .addGap(5, 5, 5)
+                .addComponent(button_delete_selected)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(label_current_sprite)
+                .addContainerGap(135, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(image_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(166, Short.MAX_VALUE))
         );
 
         jScrollPane1.setViewportView(jPanel1);
@@ -587,11 +568,11 @@ public class fightermakerView extends FrameView implements TreeSelectionListener
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 792, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1112, Short.MAX_VALUE)
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 696, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 756, Short.MAX_VALUE)
         );
 
         jScrollPane1.getAccessibleContext().setAccessibleParent(mainPanel);
@@ -760,6 +741,7 @@ private void list_blue_hitboxesMousePressed(java.awt.event.MouseEvent evt) {//GE
 
 private void list_framesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_list_framesMousePressed
     current_hitbox=null;
+    current_frame=null;
     hitbox_index_selected=-1;
     frame_index_selected=Integer.parseInt(""+list_frames.getSelectedIndex());
     //NodeList listOfMoves = hitboxes_doc.getElementsByTagName("Move");
@@ -930,8 +912,10 @@ void printSprite()
                     {
                         sprite_found=true;
                         String sprite_path="/"+((Element)sprite).getAttribute("path");
+                        int align_x=Integer.parseInt(((Element)sprite).getAttribute("align_x"));
+                        int align_y=Integer.parseInt(((Element)sprite).getAttribute("align_y"));
                         //Print sprite
-                        ((ImagePanel)image_panel).setImage(directory_path+sprite_path, blue_hitboxes, red_hitboxes);
+                        ((ImagePanel)image_panel).setImage(directory_path+sprite_path,align_x,align_y,blue_hitboxes, red_hitboxes);
                         label_current_sprite.setText(sprite_path);
                     }
                 }
@@ -1430,7 +1414,6 @@ private void button_remove_red_listMousePressed(java.awt.event.MouseEvent evt) {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel11;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane10;
     private javax.swing.JScrollPane jScrollPane11;

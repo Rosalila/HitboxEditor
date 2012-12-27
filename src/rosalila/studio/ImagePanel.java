@@ -5,6 +5,7 @@
 package rosalila.studio;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -92,11 +93,6 @@ public class ImagePanel extends JPanel{
         graphics2D.drawImage(original_image, xform, null);
         graphics2D.dispose();
     }
-    void setPosition(int x,int y)
-    {
-        this.x=x;
-        this.y=y;
-    }
     void setImage(String path)
     {
         this.blue_hitboxes.clear();
@@ -109,12 +105,17 @@ public class ImagePanel extends JPanel{
         repaint();
     }
     
-    void setImage(String path,ArrayList<Hitbox>blue_hitboxes,ArrayList<Hitbox>red_hitboxes)
+    void setImage(String path,int x,int y,ArrayList<Hitbox>blue_hitboxes,ArrayList<Hitbox>red_hitboxes)
     {
         this.blue_hitboxes=blue_hitboxes;
         this.red_hitboxes=red_hitboxes;
         try {
           original_image = ImageIO.read(new File(path));
+          this.x=x;
+          this.y=y;
+          this.setPreferredSize(new Dimension(original_image.getWidth()+Math.abs(x)*2, original_image.getHeight()+Math.abs(y)*2));
+          this.getParent().setPreferredSize(new Dimension(this.getX()+this.getPreferredSize().width, this.getY()+this.getPreferredSize().height));
+          this.revalidate();
         } catch (IOException ex) {
             // handle exception...
         }
