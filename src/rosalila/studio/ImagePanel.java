@@ -105,7 +105,7 @@ public class ImagePanel extends JPanel{
         repaint();
     }
     
-    void setImage(String path,int x,int y,ArrayList<Hitbox>blue_hitboxes,ArrayList<Hitbox>red_hitboxes)
+    void setImage(String path,int x,int y,double scale,ArrayList<Hitbox>blue_hitboxes,ArrayList<Hitbox>red_hitboxes)
     {
         this.blue_hitboxes=blue_hitboxes;
         this.red_hitboxes=red_hitboxes;
@@ -113,8 +113,16 @@ public class ImagePanel extends JPanel{
           original_image = ImageIO.read(new File(path));
           this.x=x;
           this.y=y;
-          this.setPreferredSize(new Dimension(original_image.getWidth()+Math.abs(x)*2, original_image.getHeight()+Math.abs(y)*2));
-          this.getParent().setPreferredSize(new Dimension(this.getX()+this.getPreferredSize().width, this.getY()+this.getPreferredSize().height));
+          this.scale=scale;
+          this.myScale();
+          this.setPreferredSize(new Dimension(scaled_image.getWidth()+Math.abs(x)*2, scaled_image.getHeight()+Math.abs(y)*2));
+          int size_x_parrent=this.getX()+this.getPreferredSize().width;
+          int size_y_parrent = this.getY()+this.getPreferredSize().height;
+          if(size_x_parrent<1408)
+              size_x_parrent=1408;
+          if(size_y_parrent<800)
+              size_y_parrent=800;
+          this.getParent().setPreferredSize(new Dimension(size_x_parrent,size_y_parrent));
           this.revalidate();
         } catch (IOException ex) {
             // handle exception...
