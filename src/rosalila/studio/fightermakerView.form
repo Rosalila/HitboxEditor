@@ -483,7 +483,7 @@
                     <EventHandler event="mouseDragged" listener="java.awt.event.MouseMotionListener" parameters="java.awt.event.MouseEvent" handler="image_panelMouseDragged"/>
                   </Events>
                   <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new rosalila.studio.ImagePanel()"/>
+                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new stglauncher.ImagePanel()"/>
                   </AuxValues>
 
                   <Layout>

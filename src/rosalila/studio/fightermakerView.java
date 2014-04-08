@@ -235,7 +235,7 @@ public class fightermakerView extends FrameView implements TreeSelectionListener
         button_add_blue_hitbox = new javax.swing.JButton();
         button_delete_selected = new javax.swing.JButton();
         label_current_sprite = new javax.swing.JLabel();
-        image_panel = new rosalila.studio.ImagePanel();
+        image_panel = new stglauncher.ImagePanel();
         menuBar = new javax.swing.JMenuBar();
         javax.swing.JMenu fileMenu = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
